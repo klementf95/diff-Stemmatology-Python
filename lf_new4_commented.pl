@@ -1,9 +1,9 @@
 #! /usr/bin/perl
-use strict;
+use strict; ##@DavidSiegl: explicit var mode (not necessary in Python)
 
-use lib "./Algorithm-Diff-1.201/lib";
+use lib "./Algorithm-Diff-1.201/lib"; ##@DavidSiegl: enables additional lib paths at compile time
 use Algorithm::Diff qw(diff sdiff LCS traverse_sequences traverse_balanced);
-use List::Util qw( min max );
+use List::Util qw( min max ); ##@DavidSiegl: Library for additional list methods - base Python should prob. suffice here
 
 # authorship: Dieter Bachmann (script), Philipp Roelli; rewritten by Eva Sediki.
 
@@ -168,7 +168,7 @@ sub wlist
     $cut=$cut*$numOfMss*$numOfMss/2500; 
 
     # Hash map that contains a hash for each ms; the keys of the inner hash map are words, 
-    # the value of each word is the number of occurrences of the word in the ms
+    # the value of each word is the number of occurrences of the word in the ms ## @DavidSiegl: hash map = dict
     my %mssWordCountHash=();  
 
     # Hash map over all words in the mss; the key of the hash map are words, 

@@ -8,6 +8,8 @@ This script compares two lists of words and returns the number of differences be
  The script then prints the number of lists of words, followed by the labels
   of the lists of words and the number of differences between each pair of lists.
 
+#Ist abgesegnet, aber sagt nichts über den Inhalt nur den putput aus.
+
 Interpretation des ganzen Files:
 
 This script is a Perl program that compares the contents of multiple manuscripts and outputs a matrix of their similarities and differences.
@@ -65,7 +67,8 @@ The keys of this hash map are words, and the values are Booleans indicating whet
 Another hash map, %globalLeit, is also defined, which contains a count of how often each word is a leitfehler candidate over all pairs of manuscripts.
 
 The code then iterates over all pairs of manuscripts and counts the number of times each word appears in each manuscript. 
-If the difference in the number of occurrences of a word between the two manuscripts is greater than zero and the total number of occurrences of the word in the two manuscripts is less than two,
+If the difference in the number of occurrences of a word between the two manuscripts is greater than zero and the total number of occurrences of 
+the word in the two manuscripts is less than two,
 the word is considered a leitfehler candidate for that pair of manuscripts. 
 The counts for each leitfehler candidate are then updated in both @leit and %globalLeit.
 

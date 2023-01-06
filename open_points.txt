@@ -32,8 +32,8 @@ Either argue our case for keeping diff or find an alternative
 ****************************************************************
 Outside Input:
 Use more efficient algorithms. The 'diff' function from the 'Algorithm::Diff' module can be slow for large lists of words.
- Consider using a more efficient algorithm, such as the 'Levenshtein distance' or the 'Longest Common Subsequence' (LCS) algorithm,
-  to compare the lists of words. The 'LCS' function from the 'Algorithm::Diff' module can be used to calculate the LCS of two lists of words.
+Consider using a more efficient algorithm, such as the 'Levenshtein distance' or the 'Longest Common Subsequence' (LCS) algorithm,
+to compare the lists of words. The 'LCS' function from the 'Algorithm::Diff' module can be used to calculate the LCS of two lists of words.
 ****************************************************************
 
 In case of it's importance and retention:
@@ -43,7 +43,7 @@ In case of it's importance and retention:
 ####################################How is diff used? A closer look at it:##########################################################
 
 "The program has a function called dodiff that takes two arrays of words as input and returns an integer representing
- the difference between the two arrays.
+the difference between the two arrays.
 
 For example, given the following two text sequences:
 Sequence 1: "The quick brown fox jumps over the lazy dog."
@@ -57,15 +57,15 @@ The diff function would return the following list of differences:
 ['+', 14, 'cat']
 ]
 
-  This function uses the diff function from the Algorithm::Diff module to compute the smallest
-  set of additions and deletions necessary to turn the first array of words into the second. The dodiff function then returns the number 
-  of differences found. The main part of the program iterates over all pairs of manuscripts, calling the dodiff function on their respective arrays
- of words to compute their difference, and outputs the result to the console. "
+This function uses the diff function from the Algorithm::Diff module to compute the smallest
+set of additions and deletions necessary to turn the first array of words into the second. The dodiff function then returns the number 
+of differences found. The main part of the program iterates over all pairs of manuscripts, calling the dodiff function on their respective arrays
+of words to compute their difference, and outputs the result to the console. "
 
 The script prints the length of the array of manuscript labels and the labels themselves. It then compares the contents of each manuscript
- to the contents of every other manuscript that precedes it in the array. For each comparison, it calls the subroutine dodiff(), which uses the
-  Algorithm::Diff module to compute the smallest set of additions and deletions necessary to transform the first sequence (the contents of the first 
-  manuscript) into the second sequence (the contents of the second manuscript).
+to the contents of every other manuscript that precedes it in the array. For each comparison, it calls the subroutine dodiff(), which uses the
+Algorithm::Diff module to compute the smallest set of additions and deletions necessary to transform the first sequence (the contents of the first 
+manuscript) into the second sequence (the contents of the second manuscript).
 
 ########################################Offene_Frage_an_uns_selbst##############################################################################
 
@@ -80,15 +80,16 @@ The script processes the input by removing punctuation, converting words with a 
 It also stores the labels and contents of the manuscripts in two arrays, one for the labels and one for the contents, and counts the number of manuscripts.
 
 
- ####################################Leitfehler detection:####################################################################
- This is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.
+####################################Leitfehler detection:#######################################################################################
 
- Ideen dazu:
- Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
- werden als Kandidaten herangezogen.
- Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
- um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
- Paare an Leitfehler, die nur in wenigen T&exten vorkommen, werden höher bewertet.
+This is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.
+
+Ideen dazu:
+Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
+werden als Kandidaten herangezogen.
+Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
+um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
+Paare an Leitfehler, die nur in wenigen Texten vorkommen, werden höher bewertet.
 
 ur, which stores the scores for each leitfehler candidate,
 the scores in %ur are then normalized by dividing them by the number of occurrences of
@@ -97,40 +98,53 @@ each leitfehler candidate in the manuscripts, and the resulting values are store
 scoremax=1? -> nur bi-parte Bäume, kein Mehrfachvorkommen von Leitfehlern?
 
 The script then calls the subroutine wlist(), which calculates a score for each word in the manuscripts based on the number of manuscripts
- in which it appears and its global frequency in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
+in which it appears and its global frequency in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
 
-################################GeneralUse_plus_Calculate_Score################################################################
+################################GeneralUse_plus_Calculate_Score####################################################################################
 
 #to be finished after the first in depth sighting
 
 Calculate score:
-The code first initializes a few variables: leit_hash, leit_hash_count, leit_hash_ms, leit_array, and global_leit. These variables
- are used to store information about the leitfehler (differences or errors) identified in the text sequences.
-The code then iterates through the list of differences returned by the diff function and uses it to populate 
-the leit_hash and leit_hash_count variables. The leit_hash variable stores the number of occurrences of each leitfehler,
- while the leit_hash_count variable stores the total number of occurrences of each leitfehler across all text sequences.
-The code then sorts the leit_hash variable by the number of occurrences of each leitfehler in descending order and selects
- the top 20 leitfehler. It stores the selected leitfehler in the leit_array variable.
-The code then iterates through the leit_array variable and uses it to populate the leit_hash_ms variable, which
- stores the positions of each leitfehler in the text sequences.
-The code then sorts the leit_array variable by the number of occurrences of each leitfehler in descending order.
-The code then iterates through the leit_array variable again and uses it to calculate the weight of each leitfehler.
-The weight of each leitfehler is calculated as the product of the weight variable (which is set to 20) and the total number
- of occurrences of ....
+The code first initializes a few variables:
+leit_hash, leit_hash_count, leit_hash_ms, leit_array, and global_leit. 
+These variables are used to store information about the leitfehler (differences or errors) identified in the text sequences.
+The code then :
+iterates through the list of differences returned by the diff function and uses it to populate the leit_hash and leit_hash_count variables. 
+The leit_hash variable stores the number of occurrences of each leitfehler,
+while 
+the leit_hash_count variable stores the total number of occurrences of each leitfehler across all text sequences.
+
+The code then sorts the leit_hash variable by the number of occurrences of each leitfehler in descending order 
+and selects the top 20 leitfehler. 
+It stores the selected leitfehler in the leit_array variable.
+The code then iterates
+through the leit_array variable and uses it 
+to populate the leit_hash_ms variable, which
+stores the positions of each leitfehler in the text sequences.
+The code then sorts
+ the leit_array variable by the number of occurrences of each leitfehler in descending order.
+The code then iterates
+through the leit_array variable again and uses it to 
+calculate the weight of each leitfehler.
+The weight of each leitfehler is calculated as the 
+                                                product of the weight variable (which is set to 20) and the total number of occurrences of .... ????????
 
 
-################################Package_methoden und variablen################################################################
+################################Package_methoden und variablen####################################################################################
 
-The rating function takes in five input arguments and returns the minimum of the first three arguments.
-The ratings function takes in five input arguments and returns the difference between the length of the @msLabelArray array and
+The rating function:
+takes in five input arguments and returns the minimum of the first three arguments.
+The ratings function:
+takes in five input arguments and returns the difference between the length of the @msLabelArray array and
 the maximum and minimum of the first three input arguments.
 
 
-The diff function from the Algorithm::Diff module is used to compute the smallest set of additions and deletions necessary to turn one
- sequence of words into another.
+The diff function:
+from the Algorithm::Diff module is used to compute the smallest set of additions and deletions necessary to turn one
+sequence of words into another.
 
 The sdiff function from the Algorithm::Diff module is used to compute the differences between two sequences of words and return a list
- of differences with respect to one of the sequences.
+of differences with respect to one of the sequences.
 
 The LCS function from the Algorithm::Diff module is used to compute the longest common subsequence between two sequences of words.
 
@@ -146,12 +160,13 @@ The max function from the List::Util module is used to find the maximum value in
 
 
 
-'$weight': This variable is a weight that is applied to the scores of the differences between lists of words. The script counts the differences 
+'$weight': This variable is a weight that is applied to the scores of the differences between lists of words. 
+The script counts the differences 
 between lists of words multiple times, with the best differences being counted '$weight' times and the others being counted proportionally down to 1.
 
 $cut': This variable is a threshold for the 'globalLeit' function
 
-################################MISC################################################################
+################################MISC############################################################################################################
 
 
 Input, Output:

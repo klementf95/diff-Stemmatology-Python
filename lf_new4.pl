@@ -27,7 +27,7 @@ my @msLabelArray;
 # standardisation
 my $numOfMss=0;
 while (my $in=<>)
-{
+{          
     chop $in; # Chop off the last char
 
     $in=~s/[\,!\?"]//g; # remove punctuation

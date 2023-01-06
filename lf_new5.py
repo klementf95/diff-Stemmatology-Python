@@ -34,28 +34,48 @@ for inst in sys.stdin:
     inst=inst.rstrip()
 
     # label manuscripts (3 chars), or n chars make (n-1) dots in next line
+    # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
     if inst.match(r'^(\w..)[\w\s]{7}(.+)$'):
+        
+        # die nächsten beiden lines sind zu testen, da uns nicht ganz ersichtlich ist, wie sie funktioniert.
+        # Vermutung: Zergliederung in eine Siglen und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
+        # Variablen + indexierung vermutlich neu zu setzen
         mssHash[f"{1:<8}"]=2
         msLabelArray[numOfMss]=f"{1:<8}" # all mss. label, n: index
 
+        #Reverse engineering bug fixing, überrprufung ob die beiden dicts richtig erstellt wurden und löschen von Klammern
         mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\([^\)]+\)','') # remove  ()
         mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\[[^\]]+\]','') # remove  []
 
         numOfMss+=1  
 
-wlist()
+#wlist()  # call einer weiter unten definierten Funktion
 # remove to get a fast result without calculating the lff
 
 ##########
 
+# Output Anfang, möglicher String anzuführen, der eine kurze Erklärung des Outputs liefert.
+# Option verbose=False (default)
 print(len(msLabelArray)) # print length of array
-print(msLabelArray[0]+'\n')
+print(msLabelArray[0]+'\n') # erste zeile
 
 for msIndex in range(1,len(msLabelArray)):
     print(msLabelArray[msIndex])
+    # schreib das label in die zeile
     for otherMsIndex in range(0,msIndex):
+        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:
         wordArrayMs1 = mssHash[msLabelArray[msIndex]].split(' ') # split content of this ms into words
         wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
+
+
+        #Hier wird noch do diff gecalled, wobei der gesamte content eines textes mit dem gesamten des andereren 
+        # ausgegegben und mit whitespaces umrahmt wird.
+        # (diff
+        #my $el=dodiff(\@wordArrayMs1, \@wordArrayMs2);
+        #print " ".$el." ";
+        #$matrix->assign($msIndex+1,$otherMsIndex+1,$el); 
+        #$matrix->assign($otherMsIndex+1,$msIndex+1,$el)); 
+
 
 def dodiff(a1, a2):
     wordArrMs1 = a1

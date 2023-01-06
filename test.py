@@ -273,8 +273,4 @@ The input to the given Perl code and the Python equivalent I provided is a set o
 The output of the script is a score indicating the differences between the text sequences. The score is calculated by identifying potential leitfehler (differences or errors) in the text sequences, counting the number of occurrences of each leitfehler, and assigning a weight to each one based on its frequency. The final score is the sum of the weights of all the leitfehler.
 
 If the debug parameter is set to a value greater than 0, the script also prints out additional information about the leitfehler, such as the number of occurrences of each leitfehler and the positions at which they occur in the text sequences.
-
-
-
-
 '''

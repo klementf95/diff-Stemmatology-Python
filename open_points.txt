@@ -25,7 +25,7 @@ The script prints the length of the array of manuscript labels and the labels th
   Algorithm::Diff module to compute the smallest set of additions and deletions necessary to transform the first sequence (the contents of the first 
   manuscript) into the second sequence (the contents of the second manuscript).
 
-################################Willkürliche_Reinlegung################################
+################################Willkürliche_Reinlegung################################################################
 
 Input:
 The script starts by reading in the input, which consists of lines containing labels for the manuscripts followed by the contents of the manuscripts.
@@ -51,6 +51,26 @@ scoremax=1? -> nur bi-parte Bäume, kein Mehrfachvorkommen von Leitfehlern?
 
 The script then calls the subroutine wlist(), which calculates a score for each word in the manuscripts based on the number of manuscripts
  in which it appears and its global frequency in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
+
+################################GeneralUse_pus_Calculate_Score################################################################
+
+#to be finished after the first in depth sighting
+
+Calculate score:
+The code first initializes a few variables: leit_hash, leit_hash_count, leit_hash_ms, leit_array, and global_leit. These variables
+ are used to store information about the leitfehler (differences or errors) identified in the text sequences.
+The code then iterates through the list of differences returned by the diff function and uses it to populate 
+the leit_hash and leit_hash_count variables. The leit_hash variable stores the number of occurrences of each leitfehler,
+ while the leit_hash_count variable stores the total number of occurrences of each leitfehler across all text sequences.
+The code then sorts the leit_hash variable by the number of occurrences of each leitfehler in descending order and selects
+ the top 20 leitfehler. It stores the selected leitfehler in the leit_array variable.
+The code then iterates through the leit_array variable and uses it to populate the leit_hash_ms variable, which
+ stores the positions of each leitfehler in the text sequences.
+The code then sorts the leit_array variable by the number of occurrences of each leitfehler in descending order.
+The code then iterates through the leit_array variable again and uses it to calculate the weight of each leitfehler.
+The weight of each leitfehler is calculated as the product of the weight variable (which is set to 20) and the total number
+ of occurrences of ....
+
 
 ################################Package_methoden und variablen################################################################
 
@@ -85,12 +105,6 @@ between lists of words multiple times, with the best differences being counted '
 $cut': This variable is a threshold for the 'globalLeit' function
 
 ################################MISC################################################################
-
-
-
-
-
-
 
 
 Input, Output:

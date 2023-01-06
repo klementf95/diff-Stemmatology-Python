@@ -80,7 +80,7 @@ The script processes the input by removing punctuation, converting words with a 
 It also stores the labels and contents of the manuscripts in two arrays, one for the labels and one for the contents, and counts the number of manuscripts.
 
 
- ####################################Leitkultur detection:####################################################################
+ ####################################Leitfehler detection:####################################################################
  This is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.
 
  Ideen dazu:

@@ -1,3 +1,28 @@
+Sammlung an Input für weitere Fragen, grundlegende Interpretation und Muster des Scrips und dessen Komponenten
+
+Aber auch für uns noch zu klärende Fragen über die Funktionsweise.
+
+####################################################################################################################################################
+####################################################################################################################################################
+
+Aufbau:
+-)Offene Fragen
+  - diff
+      - Bedenken zur Diskussion
+      - Umsetzung und Alternative
+      - Funktionsweise
+      - Offene Fragen an uns selbst über Inkonsistenzen
+-) Funktion des restlichen Skriptes
+  - Leitfehler detection
+  - Score Berechnung
+-) Blick auf die Package Methoden, Variablen und Parameter
+-) Beispiel Input + Output
+
+######################################################################################################################################################
+######################################################################################################################################################
+
+##########################################Questions for the session:##################################################################
+
 1.) functions of diff: 
 is it only there for the allignment/collation of text or is it a necessary step in the calculatiuon of difference 
 (most likely the latter, based on our interpretation so far and the comments in the script)
@@ -5,17 +30,34 @@ Result:
 Either argue our case for keeping diff or find an alternative
 
 ****************************************************************
+Outside Input:
 Use more efficient algorithms. The 'diff' function from the 'Algorithm::Diff' module can be slow for large lists of words.
  Consider using a more efficient algorithm, such as the 'Levenshtein distance' or the 'Longest Common Subsequence' (LCS) algorithm,
   to compare the lists of words. The 'LCS' function from the 'Algorithm::Diff' module can be used to calculate the LCS of two lists of words.
 ****************************************************************
 
 In case of it's importance and retention:
--)Comparison of the veriants and reverse engineer a correct application
+-)Comparison of the variants and reverse engineer a correct application
 -)Be more persistent and precise in our search for difflib application examples for our purposes
 
+####################################How is diff used? A closer look at it:##########################################################
+
 "The program has a function called dodiff that takes two arrays of words as input and returns an integer representing
- the difference between the two arrays. This function uses the diff function from the Algorithm::Diff module to compute the smallest
+ the difference between the two arrays.
+
+For example, given the following two text sequences:
+Sequence 1: "The quick brown fox jumps over the lazy dog."
+Sequence 2: "The slow brown fox jumps over the lazy cat."
+The diff function would return the following list of differences:
+[
+['-', 0, 'quick'],
+['+', 0, 'slow'],
+[' ', 4, 'brown'],
+[' ', 14, 'dog'],
+['+', 14, 'cat']
+]
+
+  This function uses the diff function from the Algorithm::Diff module to compute the smallest
   set of additions and deletions necessary to turn the first array of words into the second. The dodiff function then returns the number 
   of differences found. The main part of the program iterates over all pairs of manuscripts, calling the dodiff function on their respective arrays
  of words to compute their difference, and outputs the result to the console. "
@@ -25,7 +67,12 @@ The script prints the length of the array of manuscript labels and the labels th
   Algorithm::Diff module to compute the smallest set of additions and deletions necessary to transform the first sequence (the contents of the first 
   manuscript) into the second sequence (the contents of the second manuscript).
 
-################################Willkürliche_Reinlegung################################################################
+########################################Offene_Frage_an_uns_selbst##############################################################################
+
+Wird LCS wirklich im Script verwendet, oder gibt es nur eine Function innerhalb des diff packages dafür? 
+Wenn nein, wäre es eine gangbare Alternative?
+
+################################Willkürliche_Reinlegungen in den restlichen Code################################################################
 
 Input:
 The script starts by reading in the input, which consists of lines containing labels for the manuscripts followed by the contents of the manuscripts.
@@ -33,7 +80,7 @@ The script processes the input by removing punctuation, converting words with a 
 It also stores the labels and contents of the manuscripts in two arrays, one for the labels and one for the contents, and counts the number of manuscripts.
 
 
- Leitkultur detection:
+ ####################################Leitkultur detection:####################################################################
  This is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.
 
  Ideen dazu:
@@ -52,7 +99,7 @@ scoremax=1? -> nur bi-parte Bäume, kein Mehrfachvorkommen von Leitfehlern?
 The script then calls the subroutine wlist(), which calculates a score for each word in the manuscripts based on the number of manuscripts
  in which it appears and its global frequency in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
 
-################################GeneralUse_pus_Calculate_Score################################################################
+################################GeneralUse_plus_Calculate_Score################################################################
 
 #to be finished after the first in depth sighting
 

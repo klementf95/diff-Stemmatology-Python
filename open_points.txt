@@ -41,6 +41,28 @@ In case of it's importance and retention:
 -)Comparison of the variants and reverse engineer a correct application
 -)Be more persistent and precise in our search for difflib application examples for our purposes
 
+********************************************************************************************************************************
+
+The point of diff was to align the texts, and there are two things that make it obsolete:
+
+- We have better tools for text alignment, such as CollateX
+- Many scholars will already have aligned the texts and won't want their collations to be disregarded.
+
+So your version should either take an existing alignment (such as a CollateX output or a spreadsheet) 
+and skip diff altogether, or have an option for collating the input texts before handing them off to the Leitfehler-detection part.
+
+********************************************************************************************************************************
+
+Nach dem Durchgehen des Skriptes, ist die Antwort hierauf ein beherztes: Jein
+
+Diff wird nicht in seiner angedachten Funktion zum exakten Verweisen auf Differenzen verwedent, es wird nur der Teil des Outputs weiterverwendet,
+welcher die Sequenzen beinhaltet und die Anzahl der abweichenden Sequenzen wird festgehalten und mitgezählt.
+
+Womöglich würde es alternative Lösungen geben, in wiefern das jedoch ein Problem für die Verwender im Bezug auf ihre Collation darstellt,
+erschließt sich mir nicht ganz. Collationen kannst du zwar nicht als Input verwenden, aber es werden weder welche erzeugt, 
+noch sind diese deshalb zu verwerfen.
+
+
 ####################################How is diff used? A closer look at it:#######################################################################
 
 "The program has a function called dodiff that takes two arrays of words as input and returns an integer representing

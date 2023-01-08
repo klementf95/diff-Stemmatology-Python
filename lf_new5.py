@@ -43,7 +43,7 @@ for inst in sys.stdin:
         mssHash[f"{1:<8}"]=2
         msLabelArray[numOfMss]=f"{1:<8}" # all mss. label, n: index
 
-        #Reverse engineering bug fixing, überrprufung ob die beiden dicts richtig erstellt wurden und löschen von Klammern
+        #Reverse engineering bug fixing, überüprufung ob die beiden dicts richtig erstellt wurden und löschen von Klammern
         mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\([^\)]+\)','') # remove  ()
         mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\[[^\]]+\]','') # remove  []
 
@@ -216,16 +216,19 @@ def wlist():
     
     # Hash map over all words in the mss; the key of the hash map are words, 
     # the value of each word is the number of occurrences of the word over all mss
-    
+     
     globalWordCountHash = {}
 
     for msIndex in mssHash.keys():
         msContent = mssHash[msIndex]
         msContent = re.sub(r"[\s\|]+", " ", msContent)
         #für jedes label/jeden Text, nimm den Content und lösch Zeilenumbrüche raus
+        # womöglich wäre die folgende while loop besser als for loop umzusetzen.
         while re.match(r"^\s*([^\s]+)", msContent): # while a word can be found in $msContent
+            # heir wird der content der variable vermutlich "abegangen" und nach wörtern umrahmt von lehrzeichen gesucht
+            # was für das fortfahren im Text deuten würde.
             m = re.match(r"^\s*([^\s]+)", msContent)
-            # nimm das erste Element der vorherigen Indexierung von Textelementen über whitespaces
+            # nimm das erste Element der vorherigen Indexierung von Textelementen über  übersprungene whitespaces
             word = m.group(1)
             msContent = msContent[m.end():]
             
@@ -233,100 +236,201 @@ def wlist():
             # increment counter for the word found in the ms specific word 
             # hash map and in the global word hash map
             
+            #for loop iteriert alle texte durch
+            #while loop iteriert jedes wort verbunden mit leerzeichen durch
+            #wordcount variablen weisen die in der while loop ausgelesenen wörter
+            #einem dictionary key zu, der um eins erhöht wird.
+            
+            '''
+            mssWordCountHash = {text:{word:count},
+                                    {word:count},
+                                text:{word:count}
+                                    {word:count}}
+            globalWordCountHash= {{word:count},
+                                {word:count},
+                                {word:count},
+                                {word:count}}
+                                                           
+            '''
             mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
             globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
 
+    leit = []
+    globalLeit = {}
+    
+    # Hash map over all words in the mss; the keys of the hash map are words, 
+    # and the value is a counter: how often the word is a leitfehler candidate over all mss
+
+        #the subroutine wlist() calculates a score for each word in the manuscripts based
+        # on the number of manuscripts in which it appears and its global frequency
+        # in the manuscripts. It also calculates a scoremax value, which is the maximum score 
+        # among all the words.
+
+
     # finding candidates for leitfehler
 
-    # Matrix of mss that contains a hash map; the keys of the hash map are words
-    # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
-
-leit = []
-globalLeit = {}
-
-for msIndex in range(1, len(msLabelArray)):
-    currMsLabel = msLabelArray[msIndex]
-
-    for otherMsIndex in range(0, msIndex):
-        otherMsLabel = msLabelArray[otherMsIndex]
-
-        for word in globalWordCountHash.keys():
-            if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel][word] - mssWordCountHash[otherMsLabel][word]) > 0 and mssWordCountHash[currMsLabel][word] + mssWordCountHash[otherMsLabel][word] < 2:
-                leit[msIndex][otherMsIndex][word] = 1
-                globalLeit[word] = globalLeit.get(word, 0) + 1
-
-if debug == 2:
-    with open("log2", "w") as log2:
-        for word in globalLeit.keys():
-            if globalLeit[word] > cut:
-                log2.write(f"{word} ({globalLeit[word]}) : ")
-                for msIndex in range(1, len(msLabelArray)):
-                    currMsLabel = msLabelArray[msIndex]
-                    if word in mssWordCountHash[currMsLabel]:
-                        m = re.match(r"^[^ ]{1,4}", currMsLabel)
-                        log2.write(f"{m.group(0)}:{mssWordCountHash[currMsLabel][word]} ")
-                log2.write("\n")
-
-ur = {}
-
-for word in globalLeit.keys():
-    if globalLeit[word] > cut:
-        for otherWord in globalLeit.keys():
-            if globalLeit[otherWord] > cut and word < otherWord:
-                tab = [0, 0, 0, 0]
-
-                for msIndex in range(1, len(msLabelArray)):
-                    currMsLabel = msLabelArray[msIndex]
-
-                    if word in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
-                        tab[0] += 1
-                    elif word in mssWordCountHash[currMsLabel] and otherWord not in mssWordCountHash[currMsLabel]:
-                        tab[1] += 1
-                    elif word not in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
-                        tab[2] += 1
-                    else:
-                        tab[3] += 1
-
-                if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
-                    if debug:
-                        vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
-                    r = rating(tab[1], tab[2], tab[3], word, otherWord)
-                    s = ratings(tab[1], tab[2], tab[3], word, otherWord)
-                    if r > 1:
-                        ur[word] = ur.get(word, 0) + (r -
+        # Matrix of mss that contains a hash map; the keys of the hash map are words
+        # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
 
 
-# Calculate counter: number of occurences of word 
-for word in globalLeit:
-    counter = 0
+        ################################################################
+        ################################################################
+        # Die folgenden Codeblöcke sind der Funktion wlist untergeordnet und sind Teil ihrer Prozesse,
+        # jedoch verläuft die Zuerdnung und erkennung von Zugehörigkeit noch nicht fehlerfrei.
+        # Die Einrückungen und ein mögliches return statement muss noch überdacht werden,
+        # spätestens bei folgenden tests mit Mock inhalten.
 
-    # Iterate over all mss and 
-    # count the number of mss that contain word
+    '''
+        Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
+        werden als Kandidaten herangezogen.
+        Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
+        um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
+        Paare an Leitfehler, die nur in wenigen Texten vorkommen, werden höher bewertet.
+        '''
+
+
     for msIndex in range(1, len(msLabelArray)):
         currMsLabel = msLabelArray[msIndex]
+        
+    # für jedes Manuskript, geh anhand der Indizes die Label durch und speicher sie weg, außer das erste.
 
-        if mssWordCountHash[currMsLabel][word] != 0:
-            counter += 1
+        for otherMsIndex in range(0, msIndex):
+            otherMsLabel = msLabelArray[otherMsIndex]
+            
+        # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
+
+            for word in globalWordCountHash.keys(): # jedes word mit seiner globalen Anzahl iterieren
+                #only words with at least 3 characters are considered
+                # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
+                # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
+                if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel][word] - mssWordCountHash[otherMsLabel][word]) > 0 \
+                    and mssWordCountHash[currMsLabel][word] + mssWordCountHash[otherMsLabel][word] < 2:
+                        # setzt counter für wort im localen leitfehler index auf eins (bool, somit setzen, nciht erhöhen)
+                        # global wird der vote dafür um eins erhöht.
+                    leit[msIndex][otherMsIndex][word] = 1 # leitfehler-candidate 1 if yes between 2 mss.
+                    globalLeit[word] = globalLeit.get(word, 0) + 1 # leitfehler counter total for each word
+                    
+                    #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
     
-    if counter > numOfMss/2:
-        counter = numOfMss - counter
+    ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
+    ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 
+    
+    '''
+    if debug == 2:
+        with open("log2", "w") as log2:
+            for word in globalLeit.keys():
+                if globalLeit[word] > cut:
+                    log2.write(f"{word} ({globalLeit[word]}) : ")
+                    for msIndex in range(1, len(msLabelArray)):
+                        currMsLabel = msLabelArray[msIndex]
+                        if word in mssWordCountHash[currMsLabel]:
+                            m = re.match(r"^[^ ]{1,4}", currMsLabel)
+                            log2.write(f"{m.group(0)}:{mssWordCountHash[currMsLabel][word]} ")
+                    log2.write("\n")
+                        '''
+    ur = {}
 
-    if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
-        score[word] = ur[word] / counter
-    else:
-        score[word] = ur[word]
+    for word in globalLeit.keys():
+        if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, defunct (0)
+            # geht jeden counter für jedes Wort durch und danach in folge jedes andere Wort
+            for otherWord in globalLeit.keys():
+                # wenn der Counter des Wortes geringer ist, als bei dem verglichenen, dann initiere die variable tab mit 0en (?)
+                if globalLeit[otherWord] > cut and word < otherWord:
+                    tab = [0, 0, 0, 0]
 
-# Calculate scoremax
-for word in ur:
-    scoremax = max(scoremax, score[word])
+                    for msIndex in range(1, len(msLabelArray)):
+                        currMsLabel = msLabelArray[msIndex]
+                        # für jeden Index in einer Iteration der Label, speicher jedes Label in eine temp variable, 
+                        # um durch die Texte zu iterieren und sie zu vergleichen
+                        # Both, word and otherWord are in the current ms
+                        if word in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                            tab[0] += 1
+                        #Eine reihe an vergleichen wird aufgestellt:
+                        #Wort1 und Wort2 weeden daraufhin verglichen, ob eines der beiden, beide oder keines in einem manuskript 
+                        #enthalten ist oder nicht
+                        # Only word is in the the current ms
+                        elif word in mssWordCountHash[currMsLabel] and otherWord not in mssWordCountHash[currMsLabel]:
+                            tab[1] += 1
+                        # Only otherWord is in the the current ms
+                        elif word not in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                            tab[2] += 1
+                        # Neither word nor otherWord are in the the current ms
+                        else:
+                            tab[3] += 1
 
-# Print %ur if debug=1
-# logfile
-if debug > 0:
-    with open("log", "w") as log:
-        for k in sorted(score, key=score.get, reverse=True):
-            if ur[k] > 0 and score[k] > scoremax/100:
-                log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
+#################################################################################################
+#################################################################################################
+# im Perl Skript ist für den folgenden Block, für je einen Fall, jeweil eine eigenen Variante gelistet.
+# die drei fehlenden müssen noch kreeiert werden.
+
+
+                    # Both words occur together in no ms
+                    if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
+                    # Sie schließen sich gegenseitig aus - kommen nciht gemeinsam, aber getrennt in unterschiedlichen Texten vor
+                    # nur wenn der erste 0 ist, kommen die anderen Funktionen zum Einsatz, die auf die weiteren drei Spalten wirken.
+                    # nochmal zu überprüfen (?)  
+                        if debug:
+                            vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
+                        r = rating(tab[1], tab[2], tab[3], word, otherWord)
+                        s = ratings(tab[1], tab[2], tab[3], word, otherWord)
+                        if r > 1:
+                            ur[word] = ur.get(word, 0) + (r - 1)**2*s
+                            ur[otherWord] = ur.get(otherWord,0) + (r - 1)**2*s
+                            
+                            
+#################################################################################################
+#################################################################################################
+
+#Counter/Nr. of occurences ist unabhängig von der Matrix zuvor, das relationale Auftreten von einem Wort
+# im Verhältnis zu anderen steht nicht mit dem absoluten im Konflikt.
+
+    # Calculate counter: number of occurences of word 
+    for word in globalLeit:
+        counter = 0
+
+        # Iterate over all mss and 
+        # count the number of mss that contain word
+        for msIndex in range(1, len(msLabelArray)):
+            currMsLabel = msLabelArray[msIndex]
+
+            if mssWordCountHash[currMsLabel][word] != 0:
+                counter += 1
+        
+        # Geh jedes Wort durch, geh jeden Text durch, speicher beides in in eine temp variable, 
+        # wenn das wort mindestens einmal vorkommt, erhöh ihren Counter um eins.  
+        
+        if counter > numOfMss/2:
+            counter = numOfMss - counter
+        
+        #Wenn das Wort häufiger als in jedem zweiten Text vorkommt, 
+        #dann reduzier den Wert um die Anzahl der texte.
+        
+        #ur, which stores the scores for each leitfehler candidate,
+        #the scores in ur are then normalized by dividing them by the number of occurrences of
+        #each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
+        #hash map called %score (?)
+
+        if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
+            score[word] = ur[word] / counter
+        else:
+            score[word] = ur[word]
+
+    # Calculate scoremax
+    for word in ur:
+        scoremax = max(scoremax, score[word])
+        
+    #Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
+
+    # Print %ur if debug=1
+    # logfile
+    if debug > 0:
+        with open("log", "w") as log:
+            for k in sorted(score, key=score.get, reverse=True):
+                if ur[k] > 0 and score[k] > scoremax/100:
+                    log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
+                    
+    # print ins log file pro zeile: (?)
+    #score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.  (?)
 
 def rating(a1, a2, a3, word, otherWord):
     a = [a1, a2, a3]
@@ -339,6 +443,9 @@ def ratings(a1, a2, a3, word, otherWord):
     s = len(msLabelArray) - (max(a)) - (min(a))
 
     return s
+
+
+#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
 
 def vierer(a1, a2, a3, t0, t1, t2, t3, word, otherWord):
     if debug == 3:

@@ -17,6 +17,7 @@ Aufbau:
   - Score Berechnung
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output
+-) Variablendefinitionen (draft)
 
 ######################################################################################################################################################
 ######################################################################################################################################################
@@ -200,3 +201,23 @@ between each pair of lists is as follows:
 'abc' and 'def': 2 differences
 'abc' and 'ghi': 1 difference
 'def' and 'ghi': 2 differences
+
+#####################################################Questionable_variable Explanations_to_rework#################################################
+
+The script has several parameters that control its behavior:
+
+'$debug': This variable determines the level of debugging output that the script will produce. It can be set to 0, 1, 2, or 3. The higher the value, the more detailed the debugging output will be.
+
+'$cut': This variable is a threshold for the 'globalLeit' function (which is not used in the script). It is currently not used in the script.
+
+'$weight': This variable is a weight that is applied to the scores of the differences between lists of words. The script counts the differences between lists of words multiple times, with the best differences being counted '$weight' times and the others being counted proportionally down to 1.
+
+'$scoremax': This variable is not used in the script.
+
+'%ur': This is an empty hash that is not used in the script.
+
+'%score': This is an empty hash that is not used in the script.
+
+'%mssHash': This is a hash that stores the lists of words and their labels. The keys of the hash are the labels and the values are the lists of words.
+
+'@msLabelArray': This is an array that stores the labels of the lists of words. The index of each label in the array corresponds to the position of the list of words in the input.

@@ -52,8 +52,7 @@ for inst in sys.stdin:
 #wlist()  # call einer weiter unten definierten Funktion
 # remove to get a fast result without calculating the lff
 
-##########
-
+######################################################################## --> verschieben, da achronologisch 
 # Output Anfang, möglicher String anzuführen, der eine kurze Erklärung des Outputs liefert.
 # Option verbose=False (default)
 print(len(msLabelArray)) # print length of array
@@ -67,8 +66,9 @@ for msIndex in range(1,len(msLabelArray)):
         wordArrayMs1 = mssHash[msLabelArray[msIndex]].split(' ') # split content of this ms into words
         wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
 
+######################################################################## --> verschieben, da achronologisch 
 
-        #Hier wird noch do diff gecalled, wobei der gesamte content eines textes mit dem gesamten des andereren 
+        #Hier wird noch dodiff gecalled, wobei der gesamte content eines textes mit dem gesamten des andereren 
         # ausgegegben und mit whitespaces umrahmt wird.
         # (diff
         #my $el=dodiff(\@wordArrayMs1, \@wordArrayMs2);
@@ -81,6 +81,24 @@ def dodiff(a1, a2):
     wordArrMs1 = a1
     wordArrMs2 = a2
 
+# Copy the two arrays passed to this subroutine into 
+# the variables wordArrMs1 and wordArrMs2
+
+    # diff computes the smallest set of additions and deletions necessary to turn the first sequence into the second
+    # and returns a 2-dim array of differences (hunks with sequences); 
+    # each difference is a list of 3 elements (-/+, position of the change, string), e.g.:
+    # [ 
+    #   [ 
+    #      [ '-', 0, 'a' ] 
+    #   ],
+    #   [ 
+    #      [ '-', 8, 'n' ], 
+    #      [ '+', 9, 'p' ]
+    #   ]
+    # ]
+# Sind die Abänderungen innerhalb des Beispieloutputs in eine oder in beide Richtungen?
+# Sind die einzelnen Arrays für jede Zeile zu verstehen? Chaacter Sequences oder einzelne Zeichen?
+
     diffArray = diff(wordArrMs1, wordArrMs2)
 
     dist = 0
@@ -88,16 +106,58 @@ def dodiff(a1, a2):
         sequenceArray = hunk
         distInHunk = 0
         for sequence in sequenceArray:
-            word = " ".join(sequence)
-            word = re.sub(r"^. \d+ (.+)", r"\1", word)
+      # assigning a score to the pot. leitfehler in wlist();
+            word = " ".join(sequence) # Concatenate 3 elements of the list
+             # Remove +/- at the beginning and the digits (\d) of the position;
+             # leave only the char string
+            word = re.sub(r"^. \d+ (.+)", r"\1", word) # $1 contains the first match: (.+)
+            # substitute the entire output of one line of diff with the character at the end of it and save into word
+            #handpicked lf
+            #if($word=~/(definitio|tumore|cognoscere|proiciunt|afixia|introrsum|irruit|uisceribus|retentione|aperiant|molitam|catarticum|efficitur|sursum)/){$distInHunk+=$weight} # handpicked lf
+
+        # Als möglichen Parameter implementieren, ob wildcards aus der Gewichtung ausgenommen werden sollen
+        # Generelle Filterfunktionsmöglichkeiten?
+            #if($word=~/€/){$distInHunk=-2} # €-wildcard matches anything
+            
+            # calibration to $weight.  
+            
+######################################################################## --> verschieben, da achronologisch 
+            #Interaction von den leitfehler scores, mit den weights
+            #weight: lf are counted .-times more for the best of them,
+            #the others proportionally down to 1
+            #'$weight': This variable is a weight that is applied to the scores 
+            #of the differences between lists of words. The script counts the differences 
+            #between lists of words multiple times, with the best differences being counted '$weight' 
+            #times and the others being counted proportionally down to 1.
+            #score =  Wert in der output Pyramide
+            
+            #Aufrufen der Scorewerte für das Wort, mit der zusätzlichen Gewichtung f
+            # für eine größere Anzahl an Abweichungen
+            # Was macht scoremax?
+            
             if score.get(word) and scoremax * weight != 0:
                 distInHunk += score[word] / scoremax * weight
             distInHunk += 1
         dist += distInHunk
+     
+     # Die Zähler für die Anzahl der insgesamten Abweichungen pro Text und die für
+     # die Anzahl der Seuqenzen werden vereint.
+        
+   #$dist=$#diffArray+1;
     return int(dist + 0.5)
 
-msLabelArray = []
-mssHash = {}
+# Natürliches, kaufmännsiches Runden wird simuliert.
+
+##################################
+##################################
+
+# Content vom Block vor dodiff, nach der Normaliserung, zum Erstellen der Püramide und Befüllen.
+# Hier mit dem fehlenden Block, der den Inhalt processiert und die Funktion called. In welcher Reiehenfolge
+# die Funktionen angeordnet wqrden sollen, wird sich noch im Testen mit wirklichem Inhalt ergeben müssen.
+
+
+#msLabelArray = []  # vermutlich nicht gebraucht, und überschreibt nur Input
+#mssHash = {}       # vermutlich nicht gebraucht, und überschreibt nur Input
 
 print(len(msLabelArray))
 print(msLabelArray[0])
@@ -111,12 +171,26 @@ for msIndex in range(1, len(msLabelArray)):
         el = dodiff(wordArrayMs1, wordArrayMs2)
         print(" {} ".format(el))
     print("")
+    
+#####################################
+######################################
 
+#Outdiff wird im Script weder gecalled noch verwendet, 
+#das Resultat bleibt auch nach dem Auskommentieren ident, somit belassen wir es inaktiv.
+
+'''
 def outdiff(a, b):
+
+#Input = labels von zwei texten
+
     arr1 = list(mssHash[a])
     arr2 = list(mssHash[b])
 
+#Output = content als list
+
     diffArray = diff(arr1, arr2)
+
+
 
     for i in diffArray:
         print("({}): ".format(len(i)), end="")
@@ -125,22 +199,47 @@ def outdiff(a, b):
                 print(k, end=",")
         print("")
 
+'''
+
 def wlist():
     global cut
     cut = cut * numOfMss * numOfMss / 2500
+    
+# cut: This variable is a threshold for the 'globalLeit' function (which is not used in the script). 
+
+# Hash map that contains a hash for each ms; the keys of the inner hash map are words, 
+# the value of each word is the number of occurrences of the word in the ms
+#{text:{word:count}
+# {word:count}}
 
     mssWordCountHash = {}
+    
+    # Hash map over all words in the mss; the key of the hash map are words, 
+    # the value of each word is the number of occurrences of the word over all mss
+    
     globalWordCountHash = {}
 
     for msIndex in mssHash.keys():
         msContent = mssHash[msIndex]
         msContent = re.sub(r"[\s\|]+", " ", msContent)
-        while re.match(r"^\s*([^\s]+)", msContent):
+        #für jedes label/jeden Text, nimm den Content und lösch Zeilenumbrüche raus
+        while re.match(r"^\s*([^\s]+)", msContent): # while a word can be found in $msContent
             m = re.match(r"^\s*([^\s]+)", msContent)
+            # nimm das erste Element der vorherigen Indexierung von Textelementen über whitespaces
             word = m.group(1)
             msContent = msContent[m.end():]
+            
+            # $1: the word found
+            # increment counter for the word found in the ms specific word 
+            # hash map and in the global word hash map
+            
             mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
             globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
+
+    # finding candidates for leitfehler
+
+    # Matrix of mss that contains a hash map; the keys of the hash map are words
+    # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
 
 leit = []
 globalLeit = {}

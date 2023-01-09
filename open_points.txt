@@ -243,3 +243,12 @@ The script has several parameters that control its behavior:
 '%mssHash': This is a hash that stores the lists of words and their labels. The keys of the hash are the labels and the values are the lists of words.
 
 '@msLabelArray': This is an array that stores the labels of the lists of words. The index of each label in the array corresponds to the position of the list of words in the input.
+
+############Update_090123##########################
+output from diff = nested lists because for each hunk a separate element
+
+just compare row by row of collated text -> look at differences -> then score them
+
+handle optional input as regex for substitution of terms?
+
+question: how are blank spaces treated by collation?

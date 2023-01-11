@@ -252,3 +252,7 @@ just compare row by row of collated text -> look at differences -> then score th
 handle optional input as regex for substitution of terms?
 
 question: how are blank spaces treated by collation?
+
+error handling für leeren Input + Input in falschem Format (Zeilen - Spalten, nicht cocolatiert)
+
+import string package als alternative zu diff?

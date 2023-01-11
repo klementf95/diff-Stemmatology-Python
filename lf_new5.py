@@ -1,11 +1,9 @@
 #!/usr/bin/python
 
 import sys
-sys.path.append('./Algorithm-Diff-1.201/lib')
-import Algorithm.Diff as Diff
-import List.Util as Util
-import difflib
+#import difflib
 import re
+import string # noch checken
 
 # Debug level CHANGE
 # 0 : only matrix

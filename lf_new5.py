@@ -44,7 +44,8 @@ for inst in sys.stdin:
             mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
             mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
 
-            numOfMss+=1  
+            numOfMss+=1
+
 #wlist()  # call einer weiter unten definierten Funktion
 # remove to get a fast result without calculating the lff
 
@@ -63,6 +64,9 @@ for msIndex in range(1,len(msLabelArray)):
         wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
 
 ######################################################################## --> verschieben, da achronologisch 
+#trickle down economics, die unsichtbare hand des marktes regelt
+#jeweils zeilenpaare werden angeschaut und dafür beide Zeilen in Frage ausgegeben:
+#A, AB, AC BC, AD BD CD
 
         #Hier wird noch dodiff gecalled, wobei der gesamte content eines textes mit dem gesamten des andereren 
         # ausgegegben und mit whitespaces umrahmt wird.

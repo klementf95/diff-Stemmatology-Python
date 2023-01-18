@@ -55,9 +55,10 @@ while (<FH>)
         $mssHash{$msLabelArray[$numOfMss]}=~s/\[[^\]]+\]//g; # remove  []
 
         $numOfMss++;  
+        print $mssHash
     }
 }
-print $mssHash
+
 
 wlist();
 # remove to get a fast result without calculating the lff

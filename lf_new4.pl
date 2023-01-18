@@ -1,4 +1,4 @@
-#!/usr/bin/local/env perl
+#!/usr/bin/perl
 use strict;
 
 use lib "./Algorithm-Diff-1.201/lib";
@@ -29,14 +29,16 @@ my @msLabelArray;
 # standardisation
 my $numOfMss=0;
 
-my $filename = './besoin-all.txt';
+my $filename = './test_data/besoin-all.txt';
 
 open(FH, '<', $filename) or die $!;
 
+my $in;
 
-#while (my $in=<>)
-{          
-    chop $in; # Chop off the last char
+while (<FH>)
+{      
+    $in = $_;    
+    chop $in; # Chop off the last char/strip string
 
     $in=~s/[\,!\?"]//g; # remove punctuation
     # $in=~s/\./ /g; # remove . ?
@@ -55,6 +57,7 @@ open(FH, '<', $filename) or die $!;
         $numOfMss++;  
     }
 }
+print $mssHash
 
 wlist();
 # remove to get a fast result without calculating the lff

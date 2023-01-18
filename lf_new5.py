@@ -24,29 +24,27 @@ msLabelArray=[]
 # standardisation
 numOfMss=0
 for inst in sys.stdin:
-    inst=inst.strip() # Chop off the last char
 
-    inst=inst.replace(',','').replace('!','').replace('?','').replace('"','') # remove punctuation
-    # in=in.replace('.',' ') # remove . ?
-    inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
-    inst=inst.rstrip()
+        inst=inst.strip() # Chop off the last char
+        inst=inst.replace(',','').replace('!','').replace('?','').replace('"','') # remove punctuation
+        # in=in.replace('.',' ') # remove . ?
+        inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
+        inst=inst.rstrip()
+        # label manuscripts (3 chars), or n chars make (n-1) dots in next line
+        # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
+        if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
+            m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
+            mssHash[m.group(1).ljust(9)]=m.group(2)
+            # die nächsten lines sind zu testen, da uns nicht ganz ersichtlich ist, wie sie funktioniert.
+            # Vermutung: Zergliederung in eine Siglen und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
+            # Variablen + indexierung vermutlich neu zu setzen
+            msLabelArray.append(m.group(1).ljust(9))# all mss. label, n: index
+            print(msLabelArray)
+            #Reverse engineering bug fixing, überüprufung ob die beiden dicts richtig erstellt wurden und löschen von Klammern
+            mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
+            mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
 
-    # label manuscripts (3 chars), or n chars make (n-1) dots in next line
-    # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
-    if inst.match(r'^(\w..)[\w\s]{7}(.+)$'):
-        
-        # die nächsten beiden lines sind zu testen, da uns nicht ganz ersichtlich ist, wie sie funktioniert.
-        # Vermutung: Zergliederung in eine Siglen und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
-        # Variablen + indexierung vermutlich neu zu setzen
-        mssHash[f"{1:<8}"]=2
-        msLabelArray[numOfMss]=f"{1:<8}" # all mss. label, n: index
-
-        #Reverse engineering bug fixing, überüprufung ob die beiden dicts richtig erstellt wurden und löschen von Klammern
-        mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\([^\)]+\)','') # remove  ()
-        mssHash[msLabelArray[numOfMss]]=mssHash[msLabelArray[numOfMss]].replace(r'\[[^\]]+\]','') # remove  []
-
-        numOfMss+=1  
-
+            numOfMss+=1  
 #wlist()  # call einer weiter unten definierten Funktion
 # remove to get a fast result without calculating the lff
 

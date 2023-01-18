@@ -17,7 +17,7 @@ Aufbau:
   - Score Berechnung
 -) Features zur Implementierung
   - Soll
-    - Code Vollständigkeit und Kohärenz: Fehlende Elementente und unklare Elemente überarbeiten
+    - Code Vollständigkeit und Kohärenz: Fehlende Elemente und unklare Elemente überarbeiten
     - Code Integrität: Fehler Kontrolle und Chunk by Chunk Input durch beide Versionen jagen und Vergleichen
     - Alternative Preprocessing Pipeline für coco Format
     - Methode des Text Vergleichs im coco Format

@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/local/env perl
 use strict;
 
 use lib "./Algorithm-Diff-1.201/lib";
@@ -24,9 +24,17 @@ my %score;
 my %mssHash;
 my @msLabelArray;
 
+
+
 # standardisation
 my $numOfMss=0;
-while (my $in=<>)
+
+my $filename = './besoin-all.txt';
+
+open(FH, '<', $filename) or die $!;
+
+
+#while (my $in=<>)
 {          
     chop $in; # Chop off the last char
 

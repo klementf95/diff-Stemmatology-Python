@@ -173,33 +173,7 @@ for msIndex in range(1, len(msLabelArray)):
     print("")
     
 #####################################
-######################################
 
-#Outdiff wird im Script weder gecalled noch verwendet, 
-#das Resultat bleibt auch nach dem Auskommentieren ident, somit belassen wir es inaktiv.
-
-'''
-def outdiff(a, b):
-
-#Input = labels von zwei texten
-
-    arr1 = list(mssHash[a])
-    arr2 = list(mssHash[b])
-
-#Output = content als list
-
-    diffArray = diff(arr1, arr2)
-
-
-
-    for i in diffArray:
-        print("({}): ".format(len(i)), end="")
-        for j in i:
-            for k in j:
-                print(k, end=",")
-        print("")
-
-'''
 
 def wlist():
     global cut

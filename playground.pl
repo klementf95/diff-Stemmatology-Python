@@ -44,8 +44,8 @@ while (<FH>)
 
 
 
-sub wlist
-{
+#sub wlist
+#{
     $cut=$cut*$numOfMss*$numOfMss/2500; 
 
     # Hash map that contains a hash for each ms; the keys of the inner hash map are words, 
@@ -61,13 +61,17 @@ sub wlist
         my $msContent=$mssHash{$msIndex};
         $msContent=~s/[\s\|]+/ /g;
         while ($msContent=~s/^\s*([^\s]+)//) # while a word can be found in $msContent
-        {
+        {  
             # $1: the word found
             # increment counter for the word found in the ms specific word hash map and in the global word hash map
-            $mssWordCountHash{$msIndex}{$1}++; 
+            $mssWordCountHash{$msIndex}{$1}++;
             $globalWordCountHash{$1}++;
+             
         }
     }
+
+print %globalWordCountHash;
+#######################hier wird weitergeharzt
 
     # finding candidates for leitfehler
 

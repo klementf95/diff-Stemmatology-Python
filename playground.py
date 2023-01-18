@@ -3,6 +3,7 @@
 import os
 import re
 
+
 mssHash={}
 msLabelArray=[]
 
@@ -34,21 +35,6 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
             numOfMss+=1  
 
 
-print(len(msLabelArray)) # print length of array
-print(msLabelArray[0]+'\n') # erste zeile
-
-for msIndex in range(1,len(msLabelArray)):
-    print(msLabelArray[msIndex])
-    # schreib das label in die zeile
-    for otherMsIndex in range(0,msIndex):
-        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:
-        wordArrayMs1 = mssHash[msLabelArray[msIndex]].split(' ') 
-# split content of this ms into words
-        wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(' ')
-
-
-
-
 def wlist():
     global cut
     cut = cut * numOfMss * numOfMss / 2500
@@ -64,22 +50,23 @@ def wlist():
     
     # Hash map over all words in the mss; the key of the hash map are words, 
     # the value of each word is the number of occurrences of the word over all mss
-     
+
     globalWordCountHash = {}
 
     for msIndex in mssHash.keys():
         msContent = mssHash[msIndex]
+        print(mssHash[msIndex])
         msContent = re.sub(r"[\s\|]+", " ", msContent)
-        #für jedes label/jeden Text, nimm den Content und lösch Zeilenumbrüche raus
+        #für jedes label/jeden Text, nimm den Content und nomralisiert wörter
         # womöglich wäre die folgende while loop besser als for loop umzusetzen.
-        while re.match(r"^\s*([^\s]+)", msContent): # while a word can be found in $msContent
+        while re.match(r"^\s*([^\s]+)", msContent): # while anohter text can be found in $msContent
             # heir wird der content der variable vermutlich "abegangen" und nach wörtern umrahmt von lehrzeichen gesucht
             # was für das fortfahren im Text deuten würde.
             m = re.match(r"^\s*([^\s]+)", msContent)
             # nimm das erste Element der vorherigen Indexierung von Textelementen über  übersprungene whitespaces
             word = m.group(1)
             msContent = msContent[m.end():]
-            
+            #print(msContent[m.end():])
             # $1: the word found
             # increment counter for the word found in the ms specific word 
             # hash map and in the global word hash map
@@ -102,7 +89,10 @@ def wlist():
             '''
             mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
             globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
+            print(globalWordCountHash)
 
+################################################################
+##Tune in next time, when we go on a trail after the riveting mystery of the missing word counts
     leit = []
     globalLeit = {}
     

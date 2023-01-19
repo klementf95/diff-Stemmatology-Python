@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Algorithm::Diff qw(diff sdiff LCS traverse_sequences traverse_balanced);
+use Data::Dumper;
 
 my %mssHash;
 my @msLabelArray;
@@ -70,7 +71,7 @@ while (<FH>)
         }
     }
 
-print %globalWordCountHash;
+print Dumper( \%globalWordCountHash);
 #######################hier wird weitergeharzt
 
     # finding candidates for leitfehler
@@ -106,4 +107,42 @@ print %globalWordCountHash;
             }
         }
     }
- print %globalLeit;
+
+foreach my $word (keys %globalLeit)
+{
+    if ($globalLeit{$word} > $cut) # Consider only leitfehler, if its global leitfehler counter is heigher than cut
+    {
+        foreach my $otherWord (keys %globalLeit)
+        {
+            if ($globalLeit{$otherWord} > $cut &&  # Consider only leitfehler, if its global leitfehler counter is heigher than cut
+                $word lt $otherWord) # word less than otherWord
+            {
+                my @tab=(0,0,0,0);
+
+                # Iterate over all mss and 
+                # count the "relations" between the counter of word and otherWord in each ms
+                foreach my $msIndex (1 .. $#msLabelArray)
+                {
+                    my $currMsLabel = $msLabelArray[$msIndex];
+
+                    # Both, word and otherWord are in the current ms
+                    if($mssWordCountHash{$currMsLabel}{$word} && $mssWordCountHash{$currMsLabel}{$otherWord})
+                    {
+                        $tab[0]++; 
+                    }
+                    # Only word is in the the current ms
+                    elsif($mssWordCountHash{$currMsLabel}{$word} && !$mssWordCountHash{$currMsLabel}{$otherWord})
+                    {
+                        $tab[1]++; 
+                    }
+                    # Only otherWord is in the the current ms
+                    elsif(!$mssWordCountHash{$currMsLabel}{$word} && $mssWordCountHash{$currMsLabel}{$otherWord})
+                    {
+                        $tab[2]++; 
+                    }
+                    # Neither word nor otherWord are in the the current ms
+                    else
+                    {
+                        $tab[3]++; 
+                    }
+                } 

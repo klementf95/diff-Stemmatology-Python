@@ -90,6 +90,7 @@ print %globalWordCountHash;
         foreach my $otherMsIndex (0 .. $msIndex-1)
         {
             my $otherMsLabel = $msLabelArray[$otherMsIndex];
+            print $otherMsLabel;
 
             for my $word (keys %globalWordCountHash) 
             {
@@ -99,9 +100,10 @@ print %globalWordCountHash;
                 {
                     $leit[$msIndex][$otherMsIndex]{$word}=1;  # leitfehler-candidate 1 iff yes between 2 mss.
                     $globalLeit{$word}++; # leitfehler counter total for each word
+                    print %globalLeit;
                     #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
                 }
             }
         }
     }
- 
+ print %globalLeit;

@@ -145,4 +145,70 @@ foreach my $word (keys %globalLeit)
                     {
                         $tab[3]++; 
                     }
-                } 
+                }
+
+                    # Both words occur together in no ms
+                    if ($tab[0]==0 && $tab[1]>0 && $tab[2]>0 && $tab[3]>0)
+                    {
+                        if ($debug)
+                        {
+                            vierer($tab[1],$tab[2],$tab[3], @tab, $word, $otherWord);
+                        }
+                        my $r = rating($tab[1],$tab[2],$tab[3], $word, $otherWord);
+                        my $s = ratings($tab[1],$tab[2],$tab[3], $word, $otherWord);
+                        if ($r>1)
+                        {
+                            $ur{$word} = $ur{$word}+($r-1)**2*$s;
+                            $ur{$otherWord} = $ur{$otherWord}+($r-1)**2*$s;
+                        }
+                    }
+                    # Absence of word and presence of otherWord in no ms
+                    elsif ($tab[1]==0 && $tab[0]>0 && $tab[2]>0 && $tab[3]>0)
+                    {
+                        if ($debug)
+                        {
+                            vierer($tab[0],$tab[2],$tab[3], @tab, $word,  $otherWord);
+                        }
+                        my $r = rating($tab[0],$tab[2],$tab[3], $word, $otherWord);
+                        my $s = ratings($tab[0],$tab[2],$tab[3], $word, $otherWord);
+                        if ($r>1)
+                        {
+                            $ur{$word} = $ur{$word}+($r-1)**2*$s;
+                            $ur{$otherWord} = $ur{$otherWord}+($r-1)**2*$s;
+                        }
+                    }
+                    # Presence of word and absence of otherWord in no ms
+                    elsif ($tab[2]==0 && $tab[0]>0 && $tab[1]>0 && $tab[3]>0)
+                    {
+                        if ($debug)
+                        {
+                            vierer($tab[0],$tab[1],$tab[3], @tab, $word,  $otherWord);
+                        }
+                        my $r = rating($tab[0],$tab[1],$tab[3], $word, $otherWord);
+                        my $s = ratings($tab[0],$tab[1],$tab[3], $word, $otherWord);
+                        if ($r>1)
+                        {
+                            $ur{$word} = $ur{$word}+($r-1)**2*$s;
+                            $ur{$otherWord} = $ur{$otherWord}+($r-1)**2*$s;
+                        }
+                    }
+                    # Absence of word and otherWord in no ms
+                    elsif ($tab[3]==0 && $tab[0]>0 && $tab[1]>0 && $tab[2]>0)
+                    {
+                        if ($debug)
+                        {
+                            vierer($tab[0],$tab[1],$tab[2], @tab, $word,  $otherWord);
+                        }
+                        my $r = rating($tab[0],$tab[1],$tab[2], $word, $otherWord);
+                        my $s = ratings($tab[0],$tab[1],$tab[2], $word, $otherWord);
+                        if ($r>1)
+                        {
+                            $ur{$word} = $ur{$word}+($r-1)**2*$s;
+                            $ur{$otherWord} = $ur{$otherWord}+($r-1)**2*$s;
+                        }
+                    }
+				} # if ($globalLeit{$otherWord} > $cut && $word lt $otherWord)
+		    } # foreach my $otherWord (keys %globalLeit)
+        } # if ($globalLeit{$word} > $cut)
+    } # foreach my $word (keys %globalLeit)
+

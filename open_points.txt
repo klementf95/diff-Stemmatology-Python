@@ -25,6 +25,8 @@ Aufbau:
     - Fehler bei keinem Input
   - Nice to have
     - Fehler bei Input im non-coco Format (böse באַבאַלז!)
+    - bessere coding practice - nicht alles in einer Funktion
+    - pre processing verbesser - eg. punkte hinzunehmen
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output
 -) Variablendefinitionen (draft)

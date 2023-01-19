@@ -4,6 +4,8 @@ import sys
 #import difflib
 import re
 import string # noch checken
+from collections import defaultdict
+
 
 # Debug level CHANGE
 # 0 : only matrix
@@ -186,51 +188,50 @@ def wlist():
 #{text:{word:count}
 # {word:count}}
 
-    mssWordCountHash = {}
+mssWordCountHash = defaultdict(dict)
     
     # Hash map over all words in the mss; the key of the hash map are words, 
     # the value of each word is the number of occurrences of the word over all mss
-     
-    globalWordCountHash = {}
 
-    for msIndex in mssHash.keys():
-        msContent = mssHash[msIndex]
-        msContent = re.sub(r"[\s\|]+", " ", msContent)
-        #für jedes label/jeden Text, nimm den Content und lösch Zeilenumbrüche raus
-        # womöglich wäre die folgende while loop besser als for loop umzusetzen.
-        while re.match(r"^\s*([^\s]+)", msContent): # while a word can be found in $msContent
-            # heir wird der content der variable vermutlich "abegangen" und nach wörtern umrahmt von lehrzeichen gesucht
-            # was für das fortfahren im Text deuten würde.
-            m = re.match(r"^\s*([^\s]+)", msContent)
-            # nimm das erste Element der vorherigen Indexierung von Textelementen über  übersprungene whitespaces
-            word = m.group(1)
-            msContent = msContent[m.end():]
-            
-            # $1: the word found
-            # increment counter for the word found in the ms specific word 
-            # hash map and in the global word hash map
-            
-            #for loop iteriert alle texte durch
-            #while loop iteriert jedes wort verbunden mit leerzeichen durch
-            #wordcount variablen weisen die in der while loop ausgelesenen wörter
-            #einem dictionary key zu, der um eins erhöht wird.
-            
-            '''
-            mssWordCountHash = {text:{word:count},
-                                    {word:count},
-                                text:{word:count}
-                                    {word:count}}
-            globalWordCountHash= {{word:count},
+globalWordCountHash = {}
+    
+for msIndex in mssHash.keys():
+    msContent = mssHash.get(msIndex)
+    msContent = re.sub(r"[\s\|]+", " ", msContent)
+    #für jedes label/jeden Text, nimm den Content und nomralisiert wörter
+    # womöglich wäre die folgende while loop besser als for loop umzusetzen.
+    while re.match(r"^\s*([^\s]+)", msContent): # while anohter text can be found in $msContent
+        # hier wird der content der variable vermutlich "abegangen" und nach wörtern umrahmt von lehrzeichen gesucht
+        # was für das fortfahren im Text deuten würde.
+        m = re.match(r"^\s*([^\s]+)", msContent)
+        # nimm das erste Element der vorherigen Indexierung von Textelementen über  übersprungene whitespaces
+        word = m.group(1)
+        msContent = msContent[m.end():]
+        # $1: the word found
+        # increment counter for the word found in the ms specific word 
+        # hash map and in the global word hash map
+        
+        #for loop iteriert alle texte durch
+        #while loop iteriert jedes wort verbunden mit leerzeichen durch
+        #wordcount variablen weisen die in der while loop ausgelesenen wörter
+        #einem dictionary key zu, der um eins erhöht wird.
+        
+        '''
+        mssWordCountHash = {text:{word:count},
                                 {word:count},
-                                {word:count},
+                            text:{word:count}
                                 {word:count}}
-                                                           
-            '''
-            mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
-            globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
+        globalWordCountHash= {{word:count},
+                            {word:count},
+                            {word:count},
+                            {word:count}}
+                                                        
+        '''
+        
+        mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
+        
+        globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
 
-    leit = []
-    globalLeit = {}
     
     # Hash map over all words in the mss; the keys of the hash map are words, 
     # and the value is a counter: how often the word is a leitfehler candidate over all mss

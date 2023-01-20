@@ -282,6 +282,7 @@ for msIndex in mssHash.keys():
                 # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
                     if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel].get(word, 0) - mssWordCountHash[otherMsLabel].get(word, 0)) > 0 and mssWordCountHash[currMsLabel].get(word, 0) + mssWordCountHash[otherMsLabel].get(word, 0) < 2:
                         globalLeit[word] = globalLeit.get(word, 0) + 1
+
     
     ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
     ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 

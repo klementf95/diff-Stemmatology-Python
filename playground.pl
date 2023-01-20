@@ -10,6 +10,8 @@ my @msLabelArray;
 
 # standardisation
 my $numOfMss=0;
+my $cut=0;
+
 
 my $filename = './test_data/besoin-all.txt';
 
@@ -71,7 +73,6 @@ while (<FH>)
         }
     }
 
-print Dumper( \%globalWordCountHash);
 #######################hier wird weitergeharzt
 
     # finding candidates for leitfehler
@@ -91,7 +92,6 @@ print Dumper( \%globalWordCountHash);
         foreach my $otherMsIndex (0 .. $msIndex-1)
         {
             my $otherMsLabel = $msLabelArray[$otherMsIndex];
-            print $otherMsLabel;
 
             for my $word (keys %globalWordCountHash) 
             {
@@ -101,13 +101,14 @@ print Dumper( \%globalWordCountHash);
                 {
                     $leit[$msIndex][$otherMsIndex]{$word}=1;  # leitfehler-candidate 1 iff yes between 2 mss.
                     $globalLeit{$word}++; # leitfehler counter total for each word
-                    print %globalLeit;
+            
                     #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
                 }
             }
         }
     }
 
+#my @tab = (0,0,0,0);
 foreach my $word (keys %globalLeit)
 {
     if ($globalLeit{$word} > $cut) # Consider only leitfehler, if its global leitfehler counter is heigher than cut
@@ -145,9 +146,9 @@ foreach my $word (keys %globalLeit)
                     {
                         $tab[3]++; 
                     }
-                }
 
-                    # Both words occur together in no ms
+
+# Both words occur together in no ms
                     if ($tab[0]==0 && $tab[1]>0 && $tab[2]>0 && $tab[3]>0)
                     {
                         if ($debug)
@@ -211,4 +212,33 @@ foreach my $word (keys %globalLeit)
 		    } # foreach my $otherWord (keys %globalLeit)
         } # if ($globalLeit{$word} > $cut)
     } # foreach my $word (keys %globalLeit)
+}            
 
+sub rating 
+{
+    my ($a1, $a2, $a3, $word, $otherWord) = @_;
+    my @a = ($a1, $a2, $a3);
+    my $r = min @a;
+    
+    return $r;
+}
+sub ratings 
+{
+    my ($a1, $a2, $a3, $word, $otherWord) = @_;
+    my @a = ($a1, $a2, $a3);
+    my $s = @msLabelArray-(max @a)-(min @a);
+    
+    return $s;
+}
+
+sub vierer 
+{
+    my ($a1, $a2, $a3, $t0, $t1, $t2, $t3, $word, $otherWord) = @_;
+    if($debug==3)
+    {
+        if ($t0 ne 1 && $t1 ne 1 && $t2 ne 1 && $t3 ne 1)
+        {
+            print "$word/$otherWord ".$t0." ".$t1." ".$t2." ".$t3." \n";
+        }
+    }   
+}

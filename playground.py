@@ -7,6 +7,7 @@ from collections import defaultdict
 
 mssHash={}
 msLabelArray=[]
+debug = 1
 
 # standardisation
 numOfMss=0
@@ -37,7 +38,9 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
 
 def wlist():
     global cut
-    cut = cut * numOfMss * numOfMss / 2500
+
+cut = 0   
+cut = cut * numOfMss * numOfMss / 2500
     
 # cut: This variable is a threshold for the 'globalLeit' function (which is not used in the script). 
 
@@ -143,10 +146,6 @@ for msIndex in range(1, len(msLabelArray)):
             #if word in globalLeit:
                 if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel].get(word, 0) - mssWordCountHash[otherMsLabel].get(word, 0)) > 0 and mssWordCountHash[currMsLabel].get(word, 0) + mssWordCountHash[otherMsLabel].get(word, 0) < 2:
                     globalLeit[word] = globalLeit.get(word, 0) + 1
-            #else:
-                #if (len(word) >= 3):
-                    #if abs(int(mssWordCountHash[currMsLabel][word]) - int(mssWordCountHash[otherMsLabel][word])) > 0:
-                        #globalLeit[word] = 1
 
                     
                     # setzt counter für wort im localen leitfehler index auf eins (bool, somit setzen, nicht erhöhen)
@@ -156,15 +155,35 @@ for msIndex in range(1, len(msLabelArray)):
                      # leitfehler counter total for each word
                     
                 
-                #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
+# 19.11. bis hierhin getestet
 
 ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
 ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 
 
+def rating(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    r = min(a)
+
+    return r
+
+def ratings(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    s = len(msLabelArray) - (max(a)) - (min(a)) # noch nicht sicher, ob so passt (putput Vergleich)
+
+    return s
+
+
+#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
+
+def vierer(a1, a2, a3, t0, t1, t2, t3, word, otherWord):
+    if debug == 3:
+        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
+            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
+
 ur = {}
 
 for word in globalLeit.keys():
-    if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, defunct (0)
+    if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, default = 0
         # geht jeden counter für jedes Wort durch und danach in folge jedes andere Wort
         for otherWord in globalLeit.keys():
             # wenn der Counter des Wortes geringer ist, als bei dem verglichenen, dann initiere die variable tab mit 0en (?)
@@ -190,4 +209,22 @@ for word in globalLeit.keys():
                     # Neither word nor otherWord are in the the current ms
                     else:
                         tab[3] += 1
+
+
+# im Perl Skript ist für den folgenden Block, für je einen Fall, jeweil eine eigenen Variante gelistet.
+# die drei fehlenden müssen noch kreeiert werden.
+
+
+                    # Both words occur together in no ms
+                    if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
+                    # Sie schließen sich gegenseitig aus - kommen nciht gemeinsam, aber getrennt in unterschiedlichen Texten vor
+                    # nur wenn der erste 0 ist, kommen die anderen Funktionen zum Einsatz, die auf die weiteren drei Spalten wirken.
+                    # nochmal zu überprüfen (?)  
+                        if debug:
+                            vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
+                        r = rating(tab[1], tab[2], tab[3], word, otherWord)
+                        s = ratings(tab[1], tab[2], tab[3], word, otherWord)
+                        if r > 1:
+                            ur[word] = ur.get(word, 0) + (r - 1)**2*s
+                            ur[otherWord] = ur.get(otherWord,0) + (r - 1)**2*s
 

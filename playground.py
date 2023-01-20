@@ -51,9 +51,8 @@ mssWordCountHash = defaultdict(dict)
     # Hash map over all words in the mss; the key of the hash map are words, 
     # the value of each word is the number of occurrences of the word over all mss
 
-globalWordCountHash = {}
+globalWordCountHash = defaultdict(dict)
     
-print(msLabelArray)
 
 for msIndex in mssHash.keys():
     msContent = mssHash.get(msIndex)
@@ -92,13 +91,10 @@ for msIndex in mssHash.keys():
         
         globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
 
-            
-
-################################################################
-##Tune in next time, when we go on a trail after the riveting mystery of the missing word counts
-
 leit = []
-globalLeit = {}
+globalLeit = defaultdict()
+
+print(globalWordCountHash.items())
     
     # Hash map over all words in the mss; the keys of the hash map are words, 
     # and the value is a counter: how often the word is a leitfehler candidate over all mss
@@ -121,39 +117,77 @@ globalLeit = {}
         # jedoch verläuft die Zuerdnung und erkennung von Zugehörigkeit noch nicht fehlerfrei.
         # Die Einrückungen und ein mögliches return statement muss noch überdacht werden,
         # spätestens bei folgenden tests mit Mock inhalten.
-
-    '''
-        Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
-        werden als Kandidaten herangezogen.
-        Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
-        um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
-        Paare an Leitfehler, die nur in wenigen Texten vorkommen, werden höher bewertet.
-        '''
-
-
-    for msIndex in range(1, len(msLabelArray)):
-        currMsLabel = msLabelArray[msIndex]
         
+        # '''
+        # Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
+        # werden als Kandidaten herangezogen.
+        # Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
+        # um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
+        # Paare an Leitfehler, die nur in wenigen Texten vorkommen, werden höher bewertet.
+        # '''
+
+
+for msIndex in range(1, len(msLabelArray)):
+    currMsLabel = msLabelArray[msIndex]
+    
     # für jedes Manuskript, geh anhand der Indizes die Label durch und speicher sie weg, außer das erste.
 
-        for otherMsIndex in range(0, msIndex):
-            otherMsLabel = msLabelArray[otherMsIndex]
-            
+    for otherMsIndex in range(0, msIndex):
+        otherMsLabel = msLabelArray[otherMsIndex]
         # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
 
-            for word in globalWordCountHash.keys(): # jedes word mit seiner globalen Anzahl iterieren
-                #only words with at least 3 characters are considered
-                # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
-                # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
-                if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel][word] - mssWordCountHash[otherMsLabel][word]) > 0 \
-                    and mssWordCountHash[currMsLabel][word] + mssWordCountHash[otherMsLabel][word] < 2:
-                        # setzt counter für wort im localen leitfehler index auf eins (bool, somit setzen, nciht erhöhen)
-                        # global wird der vote dafür um eins erhöht.
-                    leit[msIndex][otherMsIndex][word] = 1 # leitfehler-candidate 1 if yes between 2 mss.
-                    globalLeit[word] = globalLeit.get(word, 0) + 1 # leitfehler counter total for each word
+        for word in globalWordCountHash.keys(): # jedes word mit seiner         globalen Anzahl iterieren
+            #only words with at least 3 characters are considered
+            # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
+            # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
+            #if word in globalLeit:
+                if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel].get(word, 0) - mssWordCountHash[otherMsLabel].get(word, 0)) > 0 and mssWordCountHash[currMsLabel].get(word, 0) + mssWordCountHash[otherMsLabel].get(word, 0) < 2:
+                    globalLeit[word] = globalLeit.get(word, 0) + 1
+            #else:
+                #if (len(word) >= 3):
+                    #if abs(int(mssWordCountHash[currMsLabel][word]) - int(mssWordCountHash[otherMsLabel][word])) > 0:
+                        #globalLeit[word] = 1
+
                     
-                    #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
-    
-    ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
-    ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 
-    
+                    # setzt counter für wort im localen leitfehler index auf eins (bool, somit setzen, nicht erhöhen)
+                    # global wird der vote dafür um eins erhöht.
+                    #leit[msIndex][otherMsIndex][word] = 1 
+                    # leitfehler-candidate 1 if yes between 2 mss.
+                     # leitfehler counter total for each word
+                    
+                
+                #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
+
+################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
+### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 
+
+ur = {}
+
+for word in globalLeit.keys():
+    if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, defunct (0)
+        # geht jeden counter für jedes Wort durch und danach in folge jedes andere Wort
+        for otherWord in globalLeit.keys():
+            # wenn der Counter des Wortes geringer ist, als bei dem verglichenen, dann initiere die variable tab mit 0en (?)
+            if globalLeit[otherWord] > cut and word < otherWord:
+                tab = [0, 0, 0, 0]
+
+                for msIndex in range(1, len(msLabelArray)):
+                    currMsLabel = msLabelArray[msIndex]
+                    # für jeden Index in einer Iteration der Label, speicher jedes Label in eine temp variable, 
+                    # um durch die Texte zu iterieren und sie zu vergleichen
+                    # Both, word and otherWord are in the current ms
+                    if word in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                        tab[0] += 1
+                    #Eine reihe an vergleichen wird aufgestellt:
+                    #Wort1 und Wort2 weeden daraufhin verglichen, ob eines der beiden, beide oder keines in einem manuskript 
+                    #enthalten ist oder nicht
+                    # Only word is in the the current ms
+                    elif word in mssWordCountHash[currMsLabel] and otherWord not in mssWordCountHash[currMsLabel]:
+                        tab[1] += 1
+                    # Only otherWord is in the the current ms
+                    elif word not in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                        tab[2] += 1
+                    # Neither word nor otherWord are in the the current ms
+                    else:
+                        tab[3] += 1
+

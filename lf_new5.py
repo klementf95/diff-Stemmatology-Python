@@ -264,28 +264,24 @@ for msIndex in mssHash.keys():
         '''
 
 
+    leit = []
+    globalLeit = defaultdict()
+    
     for msIndex in range(1, len(msLabelArray)):
         currMsLabel = msLabelArray[msIndex]
-        
-    # für jedes Manuskript, geh anhand der Indizes die Label durch und speicher sie weg, außer das erste.
+    
+        # für jedes Manuskript, geh anhand der Indizes die Label durch und speicher sie weg, außer das erste.
 
         for otherMsIndex in range(0, msIndex):
             otherMsLabel = msLabelArray[otherMsIndex]
-            
-        # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
+            # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
 
-            for word in globalWordCountHash.keys(): # jedes word mit seiner globalen Anzahl iterieren
+            for word in globalWordCountHash.keys(): # jedes word mit seiner         globalen Anzahl iterieren
                 #only words with at least 3 characters are considered
                 # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
                 # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
-                if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel][word] - mssWordCountHash[otherMsLabel][word]) > 0 \
-                    and mssWordCountHash[currMsLabel][word] + mssWordCountHash[otherMsLabel][word] < 2:
-                        # setzt counter für wort im localen leitfehler index auf eins (bool, somit setzen, nciht erhöhen)
-                        # global wird der vote dafür um eins erhöht.
-                    leit[msIndex][otherMsIndex][word] = 1 # leitfehler-candidate 1 if yes between 2 mss.
-                    globalLeit[word] = globalLeit.get(word, 0) + 1 # leitfehler counter total for each word
-                    
-                    #print "$currMsLabel $otherMsLabel: $word ".$mssWordCountHash{$currMsLabel}{$word}."/".$mssWordCountHash{$otherMsLabel}{$word}."\n"
+                    if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel].get(word, 0) - mssWordCountHash[otherMsLabel].get(word, 0)) > 0 and mssWordCountHash[currMsLabel].get(word, 0) + mssWordCountHash[otherMsLabel].get(word, 0) < 2:
+                        globalLeit[word] = globalLeit.get(word, 0) + 1
     
     ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
     ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 

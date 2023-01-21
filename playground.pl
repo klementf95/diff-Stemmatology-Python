@@ -247,4 +247,53 @@ sub vierer
     }   
 }
 
-print Dumper(%ur);
+# ADDED calculate counter: number of occurences of word 
+    foreach my $word (keys %globalLeit)
+    {
+        my $counter=0;
+
+        # Iterate over all mss and 
+        # count the number of mss that contain word
+        foreach my $msIndex (1 .. $#msLabelArray)
+        {
+            my $currMsLabel = $msLabelArray[$msIndex];
+
+            if($mssWordCountHash{$currMsLabel}{$word}) # if not 0
+            {
+                $counter++;
+            }
+        }
+		if($counter > $numOfMss/2)
+        {
+            $counter=$numOfMss-$counter;
+        }
+
+        if($globalLeit{$word}*$counter) # if (globalLeit counter for this word * counter) not 0
+        {
+            $score{$word}=$ur{$word}/$counter;
+        }
+        else
+		{
+		    $score{$word}=$ur{$word};
+		}
+    }
+# calculate scoremax   
+        foreach my $word (keys %ur)
+    {
+        $scoremax = ($scoremax < $score{$word} ? $score{$word} : $scoremax);
+    }
+# print %ur if debug=1
+    #logfile
+    if($debug>0)
+    {
+        open LOG, ">log";
+        my $k=0;
+        foreach $k (sort  {$score{$b}<=>$score{$a}}  keys %score)
+        {
+            if ($ur{$k}>0&&$score{$k}>$scoremax/100)
+            {
+                print LOG "$k  --  " . int($score{$k}) . " - $ur{$k} " . int($score{$k}/$scoremax*100) . "% \n";
+            }
+        } 
+        close LOG;
+    }

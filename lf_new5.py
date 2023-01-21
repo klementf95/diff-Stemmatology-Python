@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import sys
-#import difflib
 import re
 import string # noch checken
 from collections import defaultdict
@@ -22,6 +21,26 @@ ur={}
 score={}
 mssHash={}
 msLabelArray=[]
+
+def rating(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    r = min(a)
+
+    return r
+
+def ratings(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    s = len(msLabelArray) - max(a) - min(a)
+
+    return s
+
+
+#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
+
+def vierer(t0, t1, t2, t3, word, otherWord):
+    if debug == 3:
+        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
+            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
 # standardisation
 numOfMss=0
@@ -330,34 +349,44 @@ for msIndex in mssHash.keys():
                         else:
                             tab[3] += 1
 
-#################################################################################################
-#################################################################################################
-# im Perl Skript ist für den folgenden Block, für je einen Fall, jeweil eine eigenen Variante gelistet.
-# die drei fehlenden müssen noch kreeiert werden.
-
-
-                    # Both words occur together in no ms
                     if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
-                    # Sie schließen sich gegenseitig aus - kommen nciht gemeinsam, aber getrennt in unterschiedlichen Texten vor
-                    # nur wenn der erste 0 ist, kommen die anderen Funktionen zum Einsatz, die auf die weiteren drei Spalten wirken.
-                    # nochmal zu überprüfen (?)  
                         if debug:
                             vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
                         r = rating(tab[1], tab[2], tab[3], word, otherWord)
                         s = ratings(tab[1], tab[2], tab[3], word, otherWord)
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                    elif tab[1] == 0 and tab[0] > 0 and tab[2] > 0 and tab[3] > 0:
+                        if debug:
+                            vierer(tab[0], tab[2], tab[3], tab, word, otherWord)
+                        r = rating(tab[0], tab[2], tab[3], word, otherWord)
+                        s = ratings(tab[0], tab[2], tab[3], word, otherWord)
                         if r > 1:
-                            ur[word] = ur.get(word, 0) + (r - 1)**2*s
-                            ur[otherWord] = ur.get(otherWord,0) + (r - 1)**2*s
-                            
-                            
-#################################################################################################
-#################################################################################################
+                            ur[word] = ur[word] + (r - 1) ** 2 * s
+                            ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                    elif tab[2] == 0 and tab[0] > 0 and tab[1] > 0 and tab[3] > 0:
+                        if debug:
+                            vierer(tab[0], tab[1], tab[3], tab, word, otherWord)
+                        r = rating(tab[0], tab[1], tab[3], word, otherWord)
+                        s = ratings(tab[0], tab[1], tab[3], word, otherWord)
+                        if r > 1:
+                            ur[word] = ur[word] + (r - 1) ** 2 * s
+                            ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                    elif tab[3] == 0 and tab[0] > 0 and tab[1] > 0 and tab[2] > 0:
+                        if debug:
+                            vierer(tab[0], tab[1], tab[2], tab, word, otherWord)
+                        r = rating(tab[0], tab[1], tab[2], word, otherWord)
+                        s = ratings(tab[0], tab[1], tab[2], word, otherWord)
+                        if r > 1:
+                            ur[word] = ur[word] + (r - 1) ** 2 * s
+                            ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
 
 #Counter/Nr. of occurences ist unabhängig von der Matrix zuvor, das relationale Auftreten von einem Wort
 # im Verhältnis zu anderen steht nicht mit dem absoluten im Konflikt.
 
     # Calculate counter: number of occurences of word 
-    for word in globalLeit:
+    for word in globalLeit.keys():
         counter = 0
 
         # Iterate over all mss and 
@@ -365,7 +394,7 @@ for msIndex in mssHash.keys():
         for msIndex in range(1, len(msLabelArray)):
             currMsLabel = msLabelArray[msIndex]
 
-            if mssWordCountHash[currMsLabel][word] != 0:
+            if mssWordCountHash[currMsLabel].get(word, 0) != 0:
                 counter += 1
         
         # Geh jedes Wort durch, geh jeden Text durch, speicher beides in in eine temp variable, 
@@ -396,30 +425,11 @@ for msIndex in mssHash.keys():
     # Print %ur if debug=1
     # logfile
     if debug > 0:
-        with open("log", "w") as log:
-            for k in sorted(score, key=score.get, reverse=True):
+        with open("log_py.txt", "w") as log:
+            for k in sorted(score, key=lambda x: score[x], reverse=True):
                 if ur[k] > 0 and score[k] > scoremax/100:
                     log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
                     
     # print ins log file pro zeile: (?)
     #score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.  (?)
 
-def rating(a1, a2, a3, word, otherWord):
-    a = [a1, a2, a3]
-    r = min(a)
-
-    return r
-
-def ratings(a1, a2, a3, word, otherWord):
-    a = [a1, a2, a3]
-    s = len(msLabelArray) - (max(a)) - (min(a))
-
-    return s
-
-
-#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
-
-def vierer(a1, a2, a3, t0, t1, t2, t3, word, otherWord):
-    if debug == 3:
-        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
-            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")

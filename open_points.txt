@@ -20,7 +20,7 @@ Aufbau:
     X Code Vollständigkeit und Kohärenz: Fehlende Elemente und unklare Elemente überarbeiten
     X Code Integrität: Fehler Kontrolle und Chunk by Chunk Input durch beide Versionen jagen und Vergleichen
     - Alternative Preprocessing Pipeline für coco Format
-    - Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format
+    - Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format (check specs at the bottom of the file)
     - Methode des Text Vergleichs im coco Format
     - Fehler bei keinem Input
   - Nice to have
@@ -28,6 +28,7 @@ Aufbau:
     - preprocessing verbesser - eg. punkte hinzunehmen
     X bessere coding practice - nicht alles in einer Funktion
     - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
+    - Agiles Poject Managment nach SCUM anwenden (Wer wird der SCUM Master und wer der Poject Owner)
 
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output

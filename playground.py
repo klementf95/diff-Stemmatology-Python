@@ -97,7 +97,6 @@ for msIndex in mssHash.keys():
 leit = []
 globalLeit = defaultdict()
 
-print(globalWordCountHash.items())
     
     # Hash map over all words in the mss; the keys of the hash map are words, 
     # and the value is a counter: how often the word is a leitfehler candidate over all mss
@@ -168,19 +167,19 @@ def rating(a1, a2, a3, word, otherWord):
 
 def ratings(a1, a2, a3, word, otherWord):
     a = [a1, a2, a3]
-    s = len(msLabelArray) - (max(a)) - (min(a)) # noch nicht sicher, ob so passt (putput Vergleich)
+    s = len(msLabelArray) - max(a) - min(a) # noch nicht sicher, ob so passt (putput Vergleich)
 
     return s
 
 
 #Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
 
-def vierer(a1, a2, a3, t0, t1, t2, t3, word, otherWord):
+def vierer(t0, t1, t2, t3, word, otherWord):
     if debug == 3:
         if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
             print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
-ur = {}
+ur = defaultdict(int)
 
 for word in globalLeit.keys():
     if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, default = 0
@@ -209,22 +208,39 @@ for word in globalLeit.keys():
                     # Neither word nor otherWord are in the the current ms
                     else:
                         tab[3] += 1
+                        
+                if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
+                    if debug:
+                        vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
+                    r = rating(tab[1], tab[2], tab[3], word, otherWord)
+                    s = ratings(tab[1], tab[2], tab[3], word, otherWord)
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                elif tab[1] == 0 and tab[0] > 0 and tab[2] > 0 and tab[3] > 0:
+                    if debug:
+                        vierer(tab[0], tab[2], tab[3], tab, word, otherWord)
+                    r = rating(tab[0], tab[2], tab[3], word, otherWord)
+                    s = ratings(tab[0], tab[2], tab[3], word, otherWord)
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                elif tab[2] == 0 and tab[0] > 0 and tab[1] > 0 and tab[3] > 0:
+                    if debug:
+                        vierer(tab[0], tab[1], tab[3], tab, word, otherWord)
+                    r = rating(tab[0], tab[1], tab[3], word, otherWord)
+                    s = ratings(tab[0], tab[1], tab[3], word, otherWord)
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                elif tab[3] == 0 and tab[0] > 0 and tab[1] > 0 and tab[2] > 0:
+                    if debug:
+                        vierer(tab[0], tab[1], tab[2], tab, word, otherWord)
+                    r = rating(tab[0], tab[1], tab[2], word, otherWord)
+                    s = ratings(tab[0], tab[1], tab[2], word, otherWord)
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
 
-
-# im Perl Skript ist für den folgenden Block, für je einen Fall, jeweil eine eigenen Variante gelistet.
-# die drei fehlenden müssen noch kreeiert werden.
-
-
-                    # Both words occur together in no ms
-                    if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
-                    # Sie schließen sich gegenseitig aus - kommen nciht gemeinsam, aber getrennt in unterschiedlichen Texten vor
-                    # nur wenn der erste 0 ist, kommen die anderen Funktionen zum Einsatz, die auf die weiteren drei Spalten wirken.
-                    # nochmal zu überprüfen (?)  
-                        if debug:
-                            vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
-                        r = rating(tab[1], tab[2], tab[3], word, otherWord)
-                        s = ratings(tab[1], tab[2], tab[3], word, otherWord)
-                        if r > 1:
-                            ur[word] = ur.get(word, 0) + (r - 1)**2*s
-                            ur[otherWord] = ur.get(otherWord,0) + (r - 1)**2*s
+print(ur)
 

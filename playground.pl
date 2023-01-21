@@ -2,6 +2,7 @@
 
 use Algorithm::Diff qw(diff sdiff LCS traverse_sequences traverse_balanced);
 use Data::Dumper;
+use List::Util qw( min max );
 
 my %mssHash;
 my @msLabelArray;
@@ -18,6 +19,8 @@ my $filename = './test_data/besoin-all.txt';
 open(FH, '<', $filename) or die $!;
 
 my $in;
+my %ur;
+
 
 while (<FH>)
 {      
@@ -146,7 +149,7 @@ foreach my $word (keys %globalLeit)
                     {
                         $tab[3]++; 
                     }
-
+                }
 
 # Both words occur together in no ms
                     if ($tab[0]==0 && $tab[1]>0 && $tab[2]>0 && $tab[3]>0)
@@ -211,8 +214,9 @@ foreach my $word (keys %globalLeit)
 				} # if ($globalLeit{$otherWord} > $cut && $word lt $otherWord)
 		    } # foreach my $otherWord (keys %globalLeit)
         } # if ($globalLeit{$word} > $cut)
-    } # foreach my $word (keys %globalLeit)
-}            
+    } # foreach my $word (keys %globalLeit)          
+
+
 
 sub rating 
 {
@@ -242,3 +246,5 @@ sub vierer
         }
     }   
 }
+
+print Dumper(%ur);

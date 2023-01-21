@@ -27,7 +27,7 @@ Aufbau:
     - Fehler bei Input im non-coco Format (böse באַבאַלז!)
     - pre processing verbesser - eg. punkte hinzunehmen
     - bessere coding practice - nicht alles in einer Funktion
-    - Aktivsetzung/Umsetzung der inaktiven Elemente?
+    - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
 
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output

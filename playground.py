@@ -3,7 +3,6 @@
 import os
 import re
 from collections import defaultdict
-import io
 
 scoremax = 1
 mssHash={}
@@ -246,49 +245,49 @@ for word in globalLeit.keys():
 # im Verhältnis zu anderen steht nicht mit dem absoluten im Konflikt.
 
     # Calculate counter: number of occurences of word 
-    for word in globalLeit.keys():
-        counter = 0
+for word in globalLeit.keys():
+    counter = 0
 
-        # Iterate over all mss and 
-        # count the number of mss that contain word
-        for msIndex in range(1, len(msLabelArray)):
-            currMsLabel = msLabelArray[msIndex]
+    # Iterate over all mss and 
+    # count the number of mss that contain word
+    for msIndex in range(1, len(msLabelArray)):
+        currMsLabel = msLabelArray[msIndex]
 
-            if mssWordCountHash[currMsLabel].get(word, 0) != 0:
-                counter += 1
-        
-        # Geh jedes Wort durch, geh jeden Text durch, speicher beides in in eine temp variable, 
-        # wenn das wort mindestens einmal vorkommt, erhöh ihren Counter um eins.  
-        
-        if counter > numOfMss/2:
-            counter = numOfMss - counter
-        
-        #Wenn das Wort häufiger als in jedem zweiten Text vorkommt, 
-        #dann reduzier den Wert um die Anzahl der texte.
-        
-        #ur, which stores the scores for each leitfehler candidate,
-        #the scores in ur are then normalized by dividing them by the number of occurrences of
-        #each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
-        #hash map called %score (?)
+        if mssWordCountHash[currMsLabel].get(word, 0) != 0:
+            counter += 1
+    
+    # Geh jedes Wort durch, geh jeden Text durch, speicher beides in in eine temp variable, 
+    # wenn das wort mindestens einmal vorkommt, erhöh ihren Counter um eins.  
+    
+    if counter > numOfMss/2:
+        counter = numOfMss - counter
+    
+    #Wenn das Wort häufiger als in jedem zweiten Text vorkommt, 
+    #dann reduzier den Wert um die Anzahl der texte.
+    
+    #ur, which stores the scores for each leitfehler candidate,
+    #the scores in ur are then normalized by dividing them by the number of occurrences of
+    #each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
+    #hash map called %score (?)
 
-        if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
-            score[word] = ur[word] / counter
-        else:
-            score[word] = ur[word]
+    if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
+        score[word] = ur[word] / counter
+    else:
+        score[word] = ur[word]
 
-    # Calculate scoremax
-    for word in ur:
-        scoremax = max(scoremax, score[word])
-        
-    #Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
+# Calculate scoremax
+for word in ur:
+    scoremax = max(scoremax, score[word])
+    
+#Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
 
-    # Print %ur if debug=1
-    # logfile
-    if debug > 0:
-        with open("log_py.txt", "w") as log:
-            for k in sorted(score, key=lambda x: score[x], reverse=True):
-                if ur[k] > 0 and score[k] > scoremax/100:
-                    log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
+# Print %ur if debug=1
+# logfile
+if debug > 0:
+    with open("log_py.txt", "w") as log:
+        for k in sorted(score, key=lambda x: score[x], reverse=True):
+            if ur[k] > 0 and score[k] > scoremax/100:
+                log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
                     
     # print ins log file pro zeile: (?)
     #score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.  (?)

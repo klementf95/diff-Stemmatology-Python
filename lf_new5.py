@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-import sys
 import re
 import string # noch checken
 from collections import defaultdict
+import fileinput
 
 
 # Debug level CHANGE - change to binary
@@ -21,7 +21,7 @@ msLabelArray = []
 numOfMss = 0
 score = defaultdict(int)
 mssWordCountHash = defaultdict(dict)
-globalWordCountHash = defaultdict(int)
+globalWordCountHash = defaultdict(dict)
 leit = []
 globalLeit = defaultdict(int)
 ur = defaultdict(int)
@@ -55,10 +55,11 @@ def vierer(t0, t1, t2, t3, word, otherWord):
 
 #for inst in sys.stdin: -> für finale version uncomment und open ersetzen 
 
-with open(r'./test_data/besoin-all.txt', 'r') as fp:
-    for line in fp:
-        inst = line
+#with open(r'./test_data/besoin-all.txt', 'r') as fp:
+    # for line in fp:
+    #     inst = line
 # hier sys.stdin einfügen
+for inst in fileinput.input():
         inst=inst.strip() # Chop off the last char
         inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
         inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
@@ -77,7 +78,6 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
 
 
 cut = cut * numOfMss * numOfMss / 2500
-    
 # cut: This variable is a threshold for the 'globalLeit' function
 
     
@@ -179,9 +179,9 @@ for word in globalLeit.keys():
                         vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
                     r = rating(tab[1], tab[2], tab[3], word, otherWord)
                     s = ratings(tab[1], tab[2], tab[3], word, otherWord)
-                if r > 1:
-                    ur[word] = ur[word] + (r - 1) ** 2 * s
-                    ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
+                    if r > 1:
+                        ur[word] = ur[word] + (r - 1) ** 2 * s
+                        ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
                 elif tab[1] == 0 and tab[0] > 0 and tab[2] > 0 and tab[3] > 0:
                     if debug:
                         vierer(tab[0], tab[2], tab[3], tab, word, otherWord)

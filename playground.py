@@ -10,6 +10,34 @@ msLabelArray=[]
 debug = 1
 numOfMss=0
 score=defaultdict(int)
+cut = 0   
+cut = cut * numOfMss * numOfMss / 2500
+mssWordCountHash = defaultdict(dict)
+globalWordCountHash = defaultdict(dict)
+leit = []
+globalLeit = defaultdict()
+ur = defaultdict(int)
+
+def rating(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    r = min(a)
+
+    return r
+
+def ratings(a1, a2, a3, word, otherWord):
+    a = [a1, a2, a3]
+    s = len(msLabelArray) - max(a) - min(a) # noch nicht sicher, ob so passt (putput Vergleich)
+
+    return s
+
+
+#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
+
+def vierer(t0, t1, t2, t3, word, otherWord):
+    if debug == 3:
+        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
+            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
+
 
 with open(r'./test_data/besoin-all.txt', 'r') as fp:
     for line in fp:
@@ -35,12 +63,7 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
             numOfMss+=1 
 
 
-def wlist():
-    global cut
-
-cut = 0   
-cut = cut * numOfMss * numOfMss / 2500
-    
+   
 # cut: This variable is a threshold for the 'globalLeit' function (which is not used in the script). 
 
 # Hash map that contains a hash for each ms; the keys of the inner hash map are words, 
@@ -48,12 +71,12 @@ cut = cut * numOfMss * numOfMss / 2500
 #{text:{word:count}
 # {word:count}}
 
-mssWordCountHash = defaultdict(dict)
+
     
     # Hash map over all words in the mss; the key of the hash map are words, 
     # the value of each word is the number of occurrences of the word over all mss
 
-globalWordCountHash = defaultdict(dict)
+
     
 
 for msIndex in mssHash.keys():
@@ -93,8 +116,7 @@ for msIndex in mssHash.keys():
         
         globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
 
-leit = []
-globalLeit = defaultdict()
+
 
     
     # Hash map over all words in the mss; the keys of the hash map are words, 
@@ -158,27 +180,6 @@ for msIndex in range(1, len(msLabelArray)):
 ################################ debug = entspricht nicht dem default Wert und wird deshalb standardmäßig
 ### nicht verwendet. In einem späteren Optimierungsschritt ist dieser noch genauer zu betrachten. 
 
-def rating(a1, a2, a3, word, otherWord):
-    a = [a1, a2, a3]
-    r = min(a)
-
-    return r
-
-def ratings(a1, a2, a3, word, otherWord):
-    a = [a1, a2, a3]
-    s = len(msLabelArray) - max(a) - min(a) # noch nicht sicher, ob so passt (putput Vergleich)
-
-    return s
-
-
-#Vierer wird in der aktuellen Variante nciht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
-
-def vierer(t0, t1, t2, t3, word, otherWord):
-    if debug == 3:
-        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
-            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
-
-ur = defaultdict(int)
 
 for word in globalLeit.keys():
     if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, default = 0

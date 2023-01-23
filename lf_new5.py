@@ -13,7 +13,7 @@ import sys
 
 debug = 1 
 
-cut = 0 # threshold for globalLeit, currently not used
+cut = int(input("(Optional) Enter a cut off threshold for leitfehler detection (press Enter for default = 0):") or 0) # threshold for globalLeit, currently not used
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
 scoremax = 1

@@ -4,6 +4,7 @@ import re
 import string # noch checken
 from collections import defaultdict
 import fileinput
+import sys
 
 
 # Debug level CHANGE - change to binary
@@ -51,30 +52,28 @@ def vierer(t0, t1, t2, t3, word, otherWord):
         if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
             print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
-# standardisation
-
-#for inst in sys.stdin: -> für finale version uncomment und open ersetzen 
-
-#with open(r'./test_data/besoin-all.txt', 'r') as fp:
-    # for line in fp:
-    #     inst = line
-# hier sys.stdin einfügen
+# checking for correct input
+if sys.stdin.isatty():
+        print("This is no coco!")
+        quit()
+        
+# standardisation        
 for inst in fileinput.input():
-        inst=inst.strip() # Chop off the last char
-        inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
-        inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
-        inst=inst.rstrip()
-        # label manuscripts (3 chars), or n chars make (n-1) dots in next line
-        # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
-        if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
-            m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
-            mssHash[m.group(1).ljust(9)]=m.group(2)
-            # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
-            msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
-            mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
-            mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
+    inst=inst.strip() # Chop off the last char
+    inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
+    inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
+    inst=inst.rstrip()
+    # label manuscripts (3 chars), or n chars make (n-1) dots in next line
+    # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
+    if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
+        m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
+        mssHash[m.group(1).ljust(9)]=m.group(2)
+        # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
+        msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
+        mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
+        mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
 
-            numOfMss+=1 
+        numOfMss+=1 
 
 
 cut = cut * numOfMss * numOfMss / 2500

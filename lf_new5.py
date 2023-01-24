@@ -5,19 +5,24 @@ import string # noch checken
 from collections import defaultdict
 import fileinput
 import sys
+import argparse
 
 # checking for correct input
 if sys.stdin.isatty() == False:
         print("This is no coco!")
         quit()
+        
+# defining parameters (user input)
+parser = argparse.ArgumentParser(prog = 'Leitfehler Detection')
+
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0)
+parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1])
+
+args = parser.parse_args()
 
 # Debug level CHANGE - change to binary
 # 0 : only matrix 
 # 1 : .. and a list of pot. leitfehler (lf) and their score
-
-# defining parameters (user input)
-cut = int(input("(Optional) Enter a cut off threshold for leitfehler detection (press Enter for default = 0):") or 0) # threshold for globalLeit, currently not used
-debug = int(input("Do you want to generate an additional log for leitfehler candidates? (press Enter for default = 1 or else type 0)") or 1)
 
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 

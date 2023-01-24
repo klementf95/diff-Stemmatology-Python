@@ -3,26 +3,22 @@
 import re
 import string # noch checken
 from collections import defaultdict
-import fileinput
-import sys
 import argparse
-
-# checking for correct input
-if sys.stdin.isatty() == False:
-        print("This is no coco!")
-        quit()
-        
+  
 # defining parameters (user input)
-parser = argparse.ArgumentParser(prog = 'Leitfehler Detection')
+parser = argparse.ArgumentParser(
+    prog = 'Leitfehler Detection',
+    description= 'A Python Script for detecting Leitfehlers from a given text collation.',
+    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
 
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0)
-parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1])
+parser.add_argument('-f', '--file', dest='file', required=True, help='Filepath for the text collation')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='cut off threshold for leitfehler detection')
+parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
 
 args = parser.parse_args()
 
-# Debug level CHANGE - change to binary
-# 0 : only matrix 
-# 1 : .. and a list of pot. leitfehler (lf) and their score
+cut = args.cut
+debug = args.debug
 
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
@@ -64,22 +60,24 @@ def vierer(t0, t1, t2, t3, word, otherWord):
 
         
 # standardisation        
-for inst in fileinput.input():
-    inst=inst.strip() # Chop off the last char
-    inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
-    inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
-    inst=inst.rstrip()
-    # label manuscripts (3 chars), or n chars make (n-1) dots in next line
-    # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
-    if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
-        m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
-        mssDict[m.group(1).ljust(9)]=m.group(2)
-        # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
-        msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
-        mssDict[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssDict[msLabelArray[numOfMss]]) # remove  ()
-        mssDict[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssDict[msLabelArray[numOfMss]]) # remove  []
+#for inst in fileinput.input():
+with open(args.file) as f:
+    for inst in f:
+        inst=inst.strip() # Chop off the last char
+        inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
+        inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
+        inst=inst.rstrip()
+        # label manuscripts (3 chars), or n chars make (n-1) dots in next line
+        # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
+        if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
+            m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
+            mssDict[m.group(1).ljust(9)]=m.group(2)
+            # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
+            msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
+            mssDict[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssDict[msLabelArray[numOfMss]]) # remove  ()
+            mssDict[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssDict[msLabelArray[numOfMss]]) # remove  []
 
-        numOfMss+=1 
+            numOfMss+=1 
 
 
 cut = cut * numOfMss * numOfMss / 2500

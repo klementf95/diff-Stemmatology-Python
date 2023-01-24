@@ -7,17 +7,18 @@ import fileinput
 import sys
 
 # checking for correct input
-if sys.stdin.isatty():
+if sys.stdin.isatty() == False:
         print("This is no coco!")
         quit()
 
 # Debug level CHANGE - change to binary
-# 0 : only matrix
+# 0 : only matrix 
 # 1 : .. and a list of pot. leitfehler (lf) and their score
 
-debug = 1 
-
+# defining parameters (user input)
 cut = int(input("(Optional) Enter a cut off threshold for leitfehler detection (press Enter for default = 0):") or 0) # threshold for globalLeit, currently not used
+debug = int(input("Do you want to generate an additional log for leitfehler candidates? (press Enter for default = 1 or else type 0)") or 1)
+
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
 scoremax = 1

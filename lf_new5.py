@@ -22,12 +22,12 @@ debug = int(input("Do you want to generate an additional log for leitfehler cand
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
 scoremax = 1
-mssHash = {}
+mssDict = {}
 msLabelArray = []
 numOfMss = 0
 score = defaultdict(int)
-mssWordCountHash = defaultdict(dict)
-globalWordCountHash = defaultdict(dict)
+mssWordCountDict = defaultdict(dict)
+globalWordCountDict = defaultdict(dict)
 leit = []
 globalLeit = defaultdict(int)
 ur = defaultdict(int)
@@ -68,11 +68,11 @@ for inst in fileinput.input():
     # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
     if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
         m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
-        mssHash[m.group(1).ljust(9)]=m.group(2)
+        mssDict[m.group(1).ljust(9)]=m.group(2)
         # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
         msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
-        mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
-        mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
+        mssDict[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssDict[msLabelArray[numOfMss]]) # remove  ()
+        mssDict[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssDict[msLabelArray[numOfMss]]) # remove  []
 
         numOfMss+=1 
 
@@ -81,8 +81,8 @@ cut = cut * numOfMss * numOfMss / 2500
 # cut: This variable is a threshold for the 'globalLeit' function
 
     
-for msIndex in mssHash.keys():
-    msContent = mssHash.get(msIndex)
+for msIndex in mssDict.keys():
+    msContent = mssDict.get(msIndex)
     msContent = re.sub(r"[\s\|]+", " ", msContent)
     # für jedes label/jeden Text, nimmt den Content und normalisiert wörter
     while re.match(r"^\s*([^\s]+)", msContent): # while another text can be found in $msContent
@@ -91,29 +91,29 @@ for msIndex in mssHash.keys():
         msContent = msContent[m.end():]
         # .group(1): the word found
         # increment counter for the word found in the ms specific word 
-        # hash map and in the global word hash map       
-        # mssWordCountHash = {text:{word:count},
+        # mapping and in the global word mapping       
+        # mssWordCountDict = {text:{word:count},
         #                         {word:count},
         #                     text:{word:count}
         #                         {word:count}}
-        # globalWordCountHash= {{word:count},
+        # globalWordCountDict= {{word:count},
         #                     {word:count},
         #                     {word:count},
         #                     {word:count}}
                                               
-        mssWordCountHash[msIndex][word] = mssWordCountHash[msIndex].get(word, 0) + 1
-        globalWordCountHash[word] = globalWordCountHash.get(word, 0) + 1
+        mssWordCountDict[msIndex][word] = mssWordCountDict[msIndex].get(word, 0) + 1
+        globalWordCountDict[word] = globalWordCountDict.get(word, 0) + 1
 
     
     
     
-    # Hash map over all words in the mss; the keys of the hash map are words, 
+    # Hash map over all words in the mss; the keys of the dict are words, 
     # and the value is a counter: how often the word is a leitfehler candidate over all mss
 
 
     # finding candidates for leitfehler
 
-        # Matrix of mss that contains a hash map; the keys of the hash map are words
+        # Matrix of mss that contains a dict; the keys of the dict are words
         # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
 
         # Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
@@ -135,11 +135,11 @@ for msIndex in range(1, len(msLabelArray)):
         
         # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
 
-        for word in globalWordCountHash.keys(): # jedes word mit seiner         globalen Anzahl iterieren
+        for word in globalWordCountDict.keys(): # jedes word mit seiner         globalen Anzahl iterieren
             #only words with at least 3 characters are considered
             # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
             # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
-                if re.match(r"...", word) and abs(mssWordCountHash[currMsLabel].get(word, 0) - mssWordCountHash[otherMsLabel].get(word, 0)) > 0 and mssWordCountHash[currMsLabel].get(word, 0) + mssWordCountHash[otherMsLabel].get(word, 0) < 2:
+                if re.match(r"...", word) and abs(mssWordCountDict[currMsLabel].get(word, 0) - mssWordCountDict[otherMsLabel].get(word, 0)) > 0 and mssWordCountDict[currMsLabel].get(word, 0) + mssWordCountDict[otherMsLabel].get(word, 0) < 2:
                     globalLeit[word] = globalLeit.get(word, 0) + 1
 
     
@@ -159,16 +159,16 @@ for word in globalLeit.keys():
                     # für jeden Index in einer Iteration der Label, speicher jedes Label in eine temp variable, 
                     # um durch die Texte zu iterieren und sie zu vergleichen
                     # Both, word and otherWord are in the current ms
-                    if word in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                    if word in mssWordCountDict[currMsLabel] and otherWord in mssWordCountDict[currMsLabel]:
                         tab[0] += 1
                     #Eine reihe an vergleichen wird aufgestellt:
                     #Wort1 und Wort2 weeden daraufhin verglichen, ob eines der beiden, beide oder keines in einem manuskript 
                     #enthalten ist oder nicht
                     # Only word is in the the current ms
-                    elif word in mssWordCountHash[currMsLabel] and otherWord not in mssWordCountHash[currMsLabel]:
+                    elif word in mssWordCountDict[currMsLabel] and otherWord not in mssWordCountDict[currMsLabel]:
                         tab[1] += 1
                     # Only otherWord is in the the current ms
-                    elif word not in mssWordCountHash[currMsLabel] and otherWord in mssWordCountHash[currMsLabel]:
+                    elif word not in mssWordCountDict[currMsLabel] and otherWord in mssWordCountDict[currMsLabel]:
                         tab[2] += 1
                     # Neither word nor otherWord are in the the current ms
                     else:
@@ -219,7 +219,7 @@ for word in globalLeit.keys():
     for msIndex in range(1, len(msLabelArray)):
         currMsLabel = msLabelArray[msIndex]
 
-        if mssWordCountHash[currMsLabel].get(word, 0) != 0:
+        if mssWordCountDict[currMsLabel].get(word, 0) != 0:
             counter += 1
     
     if counter > numOfMss/2:
@@ -231,7 +231,7 @@ for word in globalLeit.keys():
     #ur, which stores the scores for each leitfehler candidate,
     #the scores in ur are then normalized by dividing them by the number of occurrences of
     #each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
-    #hash map called %score (?)
+    #dict called %score (?)
 
     if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
         score[word] = ur[word] / counter

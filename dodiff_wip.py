@@ -1,7 +1,39 @@
-with open(r'./test_data/besoin-all.txt', 'r') as fp:
-    for line in fp:
-        inst = line
-# hier sys.stdin einfügen
+from collections import defaultdict
+import re
+import csv
+
+scoremax = 1
+mssDict = {}
+msLabelArray = []
+numOfMss = 0
+score = defaultdict(int)
+mssWordCountDict = defaultdict(dict)
+globalWordCountDict = defaultdict(dict)
+leit = []
+globalLeit = defaultdict(int)
+ur = defaultdict(int)
+
+testdict = defaultdict(list)
+
+with open(r'./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
+    reader = csv.DictReader(fp, delimiter=',')
+    for siegl in reader.fieldnames:
+        msLabelArray.append(siegl)
+        #print(msLabelArray)
+    for lb in msLabelArray:
+        for inst in reader:
+            testls.append(inst[lb])
+        testdict[lb] = testls
+        #testls = []
+    # print(testdict)
+    
+print(testdict['A'])
+print(msLabelArray)
+      
+
+
+
+        # hier sys.stdin einfügen
         inst=inst.strip() # Chop off the last char
         inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
         inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
@@ -10,13 +42,22 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
         # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
         if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
             m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
-            mssHash[m.group(1).ljust(9)]=m.group(2)
+            mssDict[m.group(1).ljust(9)]=m.group(2)
             # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
             msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
-            mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
-            mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
+            mssDict[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssDict[msLabelArray[numOfMss]]) # remove  ()
+            mssDict[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssDict[msLabelArray[numOfMss]]) # remove  []
 
-            numOfMss+=1 
+            numOfMss+=1
+
+print(mssDict)
+
+
+
+Found an None cell on row 288 column H.txt
+Whole row is odict_values(['jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'Jos\t\tJos', 'jos', 'jos', 'jos', 'jos', '', 'jos\tjos\tjos', 'jos\tjos\tjos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos', 'jos', '', 'jos', 'jos\tjos', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None])
+Found an None cell on row 288 column I.txt
+Whole row is odict_values(['jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'Jos\t\tJos', 'jos', 'jos', 'jos', 'jos', '', 'jos\tjos\tjos', 'jos\tjos\tjos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos', 'jos', '', 'jos', 'jos\tjos', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None])
 
 ####################################################################### --> verschieben, da achronologisch 
 #Output Anfang, möglicher String anzuführen, der eine kurze Erklärung des Outputs liefert.
@@ -30,8 +71,8 @@ for msIndex in range(1,len(msLabelArray)):
     # schreib das label in die zeile
     for otherMsIndex in range(0,msIndex):
         # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:
-        wordArrayMs1 = mssHash[msLabelArray[msIndex]].split(' ') # split content of this ms into words
-        wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
+        wordArrayMs1 = mssDict[msLabelArray[msIndex]].split(' ') # split content of this ms into words
+        wordArrayMs2 = mssDict[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
 
 ####################################################################### --> verschieben, da achronologisch 
 # trickle down economics, die unsichtbare hand des marktes regelt
@@ -127,7 +168,7 @@ def dodiff(a1, a2):
 
 
 #msLabelArray = []  # vermutlich nicht gebraucht, und überschreibt nur Input
-#mssHash = {}       # vermutlich nicht gebraucht, und überschreibt nur Input
+#mssDict = {}       # vermutlich nicht gebraucht, und überschreibt nur Input
 
 print(len(msLabelArray))
 print(msLabelArray[0])
@@ -135,8 +176,8 @@ print(msLabelArray[0])
 for msIndex in range(1, len(msLabelArray)):
     print(msLabelArray[msIndex])
     for otherMsIndex in range(0, msIndex):
-        wordArrayMs1 = mssHash[msLabelArray[msIndex]].split(" ")
-        wordArrayMs2 = mssHash[msLabelArray[otherMsIndex]].split(" ")
+        wordArrayMs1 = mssDict[msLabelArray[msIndex]].split(" ")
+        wordArrayMs2 = mssDict[msLabelArray[otherMsIndex]].split(" ")
 
         el = dodiff(wordArrayMs1, wordArrayMs2)
         print(" {} ".format(el))

@@ -24,6 +24,9 @@ Aufbau:
     - Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
+    - seperator + encoding flags, die als start input mitgeliefert werden
+    - abzufangender input:
+      - tab + comma seperated, txt + csv file
   - Nice to have
     - Fehler bei Input im non-coco Format (böse באַבאַלז!)
     - preprocessing verbesser - eg. punkte hinzunehmen

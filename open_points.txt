@@ -23,6 +23,7 @@ Aufbau:
     - Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format (check specs at the bottom of the file)
     - Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
+    - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
   - Nice to have
     - Fehler bei Input im non-coco Format (böse באַבאַלז!)
     - preprocessing verbesser - eg. punkte hinzunehmen

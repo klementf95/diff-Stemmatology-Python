@@ -14,26 +14,18 @@ globalLeit = defaultdict(int)
 ur = defaultdict(int)
 
 testdict = defaultdict(list)
+testls = []
+
 
 with open(r'./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
     reader = csv.DictReader(fp, delimiter=',')
     for siegl in reader.fieldnames:
-        msLabelArray.append(siegl)
-        #print(msLabelArray)
-    for lb in msLabelArray:
+        fp.seek(0)
         for inst in reader:
-            testls.append(inst[lb])
-        testdict[lb] = testls
-        #testls = []
-    # print(testdict)
-    
-print(testdict['A'])
-print(msLabelArray)
-      
-
-
-
-        # hier sys.stdin einfügen
+            testls.append(inst[siegl])
+        testdict[siegl] = testls.copy()
+        testls.clear()   
+        
         inst=inst.strip() # Chop off the last char
         inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
         inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
@@ -53,11 +45,6 @@ print(msLabelArray)
 print(mssDict)
 
 
-
-Found an None cell on row 288 column H.txt
-Whole row is odict_values(['jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'Jos\t\tJos', 'jos', 'jos', 'jos', 'jos', '', 'jos\tjos\tjos', 'jos\tjos\tjos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos', 'jos', '', 'jos', 'jos\tjos', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None])
-Found an None cell on row 288 column I.txt
-Whole row is odict_values(['jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'Jos\t\tJos', 'jos', 'jos', 'jos', 'jos', '', 'jos\tjos\tjos', 'jos\tjos\tjos\tjos', 'jos\tjos', 'jos\tjos', 'jos\tjos', 'jos', 'jos', '', 'jos', 'jos\tjos', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None])
 
 ####################################################################### --> verschieben, da achronologisch 
 #Output Anfang, möglicher String anzuführen, der eine kurze Erklärung des Outputs liefert.

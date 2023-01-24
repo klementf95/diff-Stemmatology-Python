@@ -6,6 +6,10 @@ from collections import defaultdict
 import fileinput
 import sys
 
+# checking for correct input
+if sys.stdin.isatty():
+        print("This is no coco!")
+        quit()
 
 # Debug level CHANGE - change to binary
 # 0 : only matrix
@@ -52,10 +56,6 @@ def vierer(t0, t1, t2, t3, word, otherWord):
         if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
             print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
-# checking for correct input
-if sys.stdin.isatty():
-        print("This is no coco!")
-        quit()
         
 # standardisation        
 for inst in fileinput.input():

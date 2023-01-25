@@ -3,7 +3,7 @@ import re
 import csv
 
 scoremax = 1
-mssDict = {}
+mssDict = defaultdict(str)
 msLabelArray = []
 numOfMss = 0
 score = defaultdict(int)
@@ -44,6 +44,11 @@ print(mssDictList['A        '])
 
 print(len(msLabelArray)) # print length of array
 print(msLabelArray[0]) # erste zeile
+
+for key, value in mssDictList.items():
+    mssDict[key] = "".join(mssDictList[key])
+    
+print(mssDict)
 
 for msIndex in range(1,len(msLabelArray)):
     print(msLabelArray[msIndex])

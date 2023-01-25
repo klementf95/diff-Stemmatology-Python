@@ -24,13 +24,13 @@ Aufbau:
     - Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
-    - seperator + encoding flags, die als start input mitgeliefert werden
+    X seperator + encoding flags, die als start input mitgeliefert werden
     - abzufangender input:
       - tab + comma seperated, txt + csv file
     - Preprocessing Params für regex und dict (optional)
   - Nice to have
     - Fehler bei Input im non-coco Format (böse באַבאַלז!)
-    - preprocessing verbesser - eg. punkte hinzunehmen
+    X preprocessing verbesser - eg. punkte hinzunehmen
     X bessere coding practice - nicht alles in einer Funktion
     - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
     X Normalisieren der Libraries für StdInput

@@ -40,8 +40,7 @@ with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp
 
 msLabelArray = list(mssDictList.keys())
 numOfMss = len(msLabelArray)
-    
-    
+
 for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':

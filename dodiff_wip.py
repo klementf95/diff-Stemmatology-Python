@@ -18,7 +18,7 @@ mssDictList = defaultdict(list)
 mssListTemp = []
 
 
-with open('./test_data/besoin_test.csv','r', newline='', encoding='utf-8') as fp:
+with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
     reader = csv.DictReader(fp, delimiter=',')
     for label in reader.fieldnames:
         fp.seek(0)
@@ -281,9 +281,8 @@ def dodiff(a1, a2):
     for hunk in diffArray:
         sequenceArray = hunk
         distInHunk = 0
-
     for sequence in sequenceArray:
-#   if($word=~/€/){$distInHunk=-2} # €-wildcard matches anything       
+#   if($word=~/€/){$distInHunk=-2} # €-wildcard matches anything
            if score.get(word) and scoremax * weight != 0:
                 distInHunk += score[word] / scoremax * weight
                 distInHunk += 1

@@ -17,7 +17,7 @@ mssDictList = defaultdict(list)
 mssListTemp = []
 
 
-with open(r'./test_data/besoin_test.csv','r', newline='', encoding='utf-8') as fp:
+with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
     reader = csv.DictReader(fp, delimiter=',')
     for label in reader.fieldnames:
         fp.seek(0)
@@ -30,33 +30,44 @@ with open(r'./test_data/besoin_test.csv','r', newline='', encoding='utf-8') as f
 msLabelArray = list(mssDictList.keys())
 numOfMss = len(msLabelArray)
             
+# for key in mssDictList:
+#     ms = mssDictList[key][1:]
+#     if ms and ms[-1] == ' ':
+#         ms = ms[:-1]
+#     ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €') for word in ms]
+#     mssDictList[key] = ms
+
+# for key, value in mssDictList.items():
+#     mssDict[key] = "".join(mssDictList[key])
+    
+# for key in mssDictList:
+#     ms = [word.replace(' ','') for word in ms]
+#     mssDictList[key] = ms
+    
 for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €') for word in ms]
+    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
+    mssDictList[key] = ms
+    mssDict[key] = "".join(mssDictList[key])
+    ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
 
-
-
-print(mssDictList['A        '])
+print(mssDictList)
         
 
 print(len(msLabelArray)) # print length of array
 print(msLabelArray[0]) # erste zeile
 
-for key, value in mssDictList.items():
-    mssDict[key] = "".join(mssDictList[key])
-    
-print(mssDict)
 
 for msIndex in range(1,len(msLabelArray)):
     print(msLabelArray[msIndex])
     # schreib das label in die zeile
     for otherMsIndex in range(0,msIndex):
-        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:
-        wordArrayMs1 = mssDict[msLabelArray[msIndex]].split(' ') # split content of this ms into words
-        wordArrayMs2 = mssDict[msLabelArray[otherMsIndex]].split(' ')# split content of the other ms into words
+        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        
+        wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
+        wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
 
 ####################################################################### --> verschieben, da achronologisch 
 # trickle down economics, die unsichtbare hand des marktes regelt

@@ -17,16 +17,20 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-f', '--file', dest='file', required=True, help='Filepath for the text collation')
 parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='cut off threshold for leitfehler detection')
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
+parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Delimiter of input file (default: comma)')
+parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Encoding of input file (default: utf-8) See other available options for function open()')
 
 args = parser.parse_args()
 
 cut = args.cut
 debug = args.debug
+delimiter = args.delimiter
+encoding = args.encoding
 
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
 scoremax = 1
-mssDict = {}
+mssDict = defaultdict(str)
 msLabelArray = []
 numOfMss = 0
 score = defaultdict(int)
@@ -35,6 +39,8 @@ globalWordCountDict = defaultdict(dict)
 leit = []
 globalLeit = defaultdict(int)
 ur = defaultdict(int)
+mssDictList = defaultdict(list)
+mssListTemp = []
 
 #the main part of the script calculates a score for each word in the manuscripts based
 # on the number of manuscripts in which it appears and its global frequency
@@ -61,26 +67,46 @@ def vierer(t0, t1, t2, t3, word, otherWord):
         if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
             print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
-        
-# standardisation        
-#for inst in fileinput.input():
-with open(args.file) as f:
-    for inst in f:
-        inst=inst.strip() # Chop off the last char
-        inst=inst.replace(',','').replace('!','').replace('?','').replace('"','').replace('.',' ') # remove punctuation
-        inst=inst.replace(r'\s[^\s]*\*[^\s]*', ' €') # convert word with a *-wildcard to €
-        inst=inst.rstrip()
-        # label manuscripts (3 chars), or n chars make (n-1) dots in next line
-        # Anfang der zeile, mindestens drei zeichen, erstes alpha. gefolgt von min 7 zeichen an text oder white space, gefolgt von zufälliger anzahl an text. 
-        if re.match(r'^(\w..)[\w\s]{7}(.+)$', inst):
-            m=re.match(r'^(\w..)[\w\s]{7}(.+)$', inst)
-            mssDict[m.group(1).ljust(9)]=m.group(2)
-            # Zergliederung in eine Sigle und eine Text Variable, die auf ein key/value paar aufgeteilt und abgelegt werden.
-            msLabelArray.append(m.group(1).ljust(9)) # all mss. label, n: index
-            mssDict[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssDict[msLabelArray[numOfMss]]) # remove  ()
-            mssDict[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssDict[msLabelArray[numOfMss]]) # remove  []
 
-            numOfMss+=1 
+with open(args.file,'r', newline='', encoding=encoding) as f:
+    reader = csv.DictReader(f, delimiter=delimiter)
+    for label in reader.fieldnames:
+        f.seek(0)
+        for inst in reader:
+            mssListTemp.append(inst[label])
+        mssDictList[label.ljust(9)] = mssListTemp.copy()
+        mssListTemp.clear()
+
+
+msLabelArray = list(mssDictList.keys())
+numOfMss = len(msLabelArray)
+            
+    
+for key in mssDictList:
+    ms = mssDictList[key][1:]
+    if ms and ms[-1] == ' ':
+        ms = ms[:-1]
+    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
+    mssDictList[key] = ms
+    mssDict[key] = "".join(mssDictList[key])
+    ms = [word.replace(' ','') for word in ms]
+    mssDictList[key] = ms
+
+        
+
+print(len(msLabelArray)) # print length of array
+print(msLabelArray[0]) # erste zeile
+
+
+for msIndex in range(1,len(msLabelArray)):
+    print(msLabelArray[msIndex])
+    # schreib das label in die zeile
+    for otherMsIndex in range(0,msIndex):
+        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        
+        wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
+        wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
+           
+
 
 
 cut = cut * numOfMss * numOfMss / 2500

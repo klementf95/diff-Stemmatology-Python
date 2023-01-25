@@ -20,16 +20,14 @@ Aufbau:
     X Code Vollständigkeit und Kohärenz: Fehlende Elemente und unklare Elemente überarbeiten
     X Code Integrität: Fehler Kontrolle und Chunk by Chunk Input durch beide Versionen jagen und Vergleichen
     X Alternative Preprocessing Pipeline für coco Format
-    - Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format (check specs at the bottom of the file)
+    X Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format (check specs at the bottom of the file)
     - Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
     X seperator + encoding flags, die als start input mitgeliefert werden
-    - abzufangender input:
-      - tab + comma seperated, txt + csv file
     - Preprocessing Params für regex und dict (optional)
   - Nice to have
-    - Fehler bei Input im non-coco Format (böse באַבאַלז!)
+    X Fehler bei Input im non-coco Format (böse באַבאַלז!)
     X preprocessing verbesser - eg. punkte hinzunehmen
     X bessere coding practice - nicht alles in einer Funktion
     - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?

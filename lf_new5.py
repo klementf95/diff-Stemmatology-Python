@@ -1,9 +1,12 @@
 #!/usr/bin/python
 
 import re
-import string # noch checken
 from collections import defaultdict
 import argparse
+import csv
+import string # noch checken
+
+
   
 # defining parameters (user input)
 parser = argparse.ArgumentParser(

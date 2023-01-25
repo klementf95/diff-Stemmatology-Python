@@ -60,7 +60,9 @@ with open(r'./test_data/besoin-all.txt', 'r') as fp:
             mssHash[msLabelArray[numOfMss]]=re.sub(r'\([^\)]+\)','',mssHash[msLabelArray[numOfMss]]) # remove  ()
             mssHash[msLabelArray[numOfMss]]=re.sub(r'\[[^\]]+\]','',mssHash[msLabelArray[numOfMss]]) # remove  []
 
-            numOfMss+=1 
+            numOfMss+=1
+            
+print(mssHash.keys()) 
 
 
    

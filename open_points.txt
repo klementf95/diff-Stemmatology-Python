@@ -24,7 +24,7 @@ Aufbau:
     - Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
     X seperator + encoding flags, die als start input mitgeliefert werden
-    - Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
+    X Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
   - Nice to have
     X Fehler bei Input im non-coco Format (böse באַבאַלז!)

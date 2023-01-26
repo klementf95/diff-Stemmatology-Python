@@ -4,8 +4,6 @@ import re
 from collections import defaultdict
 import argparse
 import csv
-import string # noch checken
-
 
   
 # defining parameters (user input)
@@ -19,6 +17,7 @@ parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
 parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Delimiter of input file (default: comma)')
 parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Encoding of input file (default: utf-8) See other available options for function open()')
+parser.add_argument('-r', '--regex', dest='regex', default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts. See the re.sub() format. Example: r"[\s\|]+", ""')
 
 args = parser.parse_args()
 
@@ -26,6 +25,8 @@ cut = args.cut
 debug = args.debug
 delimiter = args.delimiter
 encoding = args.encoding
+regex = args.regex
+
 
 weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
@@ -86,13 +87,28 @@ for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
+    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('\r\n', '') for word in ms]
     mssDictList[key] = ms
+    if regex != 0:
+        with open(regex) as f:
+            count = 0
+            pattern = []
+            repl = []
+            for inst in f:
+                if count % 2 == 0:
+                    pattern.append(inst)
+                else:
+                    repl.append(inst)
+                count += 1
+        regexDict = dict(zip(pattern,repl))
+        for pat, rep in regexDict.items():
+            ms = [re.sub(pat.replace("\n", ""), rep, word) for word in ms]
+            mssDictList[key] = ms
     mssDict[key] = "".join(mssDictList[key])
     ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
-
-        
+     
+       
 
 print(len(msLabelArray)) # print length of array
 print(msLabelArray[0]) # erste zeile

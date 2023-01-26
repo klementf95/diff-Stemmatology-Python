@@ -1,0 +1,2 @@
+r"(otre)"," €"
+r"(de)+", "daggerman"

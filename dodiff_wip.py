@@ -309,10 +309,13 @@ print(msLabelArray[0]) # erste zeile
 testDict = defaultdict()
 testList = []
 
-
+max_key_length = max([len(key) for key in mssDictList.keys()])
 
 for msIndex in range(1,len(msLabelArray)):
-    print(msLabelArray[msIndex])
+    #print(msLabelArray[msIndex])
+    current_key = msLabelArray[msIndex]
+    print(current_key, end='')
+    # Add spaces to align the labels
     # schreib das label in die zeile
     for otherMsIndex in range(0,msIndex):
         # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        

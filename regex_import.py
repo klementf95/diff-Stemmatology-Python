@@ -23,9 +23,9 @@ mssListTemp = []
 #     description= 'A Python Script for detecting Leitfehlers from a given text collation.',
 #     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
 
-# parser.add_argument('-r', '--regex', dest='regex',  required=False, help=""Filepath to a textfile for additional regex patterns to be substituted within the texts.(optional)
-#  See the re.sub format. Example: r'[\s\|]+', '' ' "")
+#parser.add_argument('-r', '--regex', dest='regex',  required=False, help='Filepath to a textfile for additional regex patterns to be substituted within the texts.(optional) See the re.sub format. Example: r"[\s\|]+", ""   ')
 # args = parser.parse_args()
+#regex = args.regex
 
 
 with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
@@ -41,15 +41,28 @@ with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp
 msLabelArray = list(mssDictList.keys())
 numOfMss = len(msLabelArray)
 
+
 for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
+    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('\r\n', '') for word in ms]
     mssDictList[key] = ms
+    #if regex is not None:
     with open("./test_data/one_regex_to_rule_them_all.txt") as f:
+        count = 0
+        pattern = []
+        repl = []
         for inst in f:
-            ms = [re.sub(inst, word) for word in ms]
+            if count % 2 == 0:
+                pattern.append(inst)
+            else:
+                repl.append(inst)
+            count += 1
+    regexDict = dict(zip(pattern,repl))
+    for pat, rep in regexDict.items():
+        print (pat, rep)
+            ms = [re.sub('r' + pat, rep, word) for word in ms]
             print(ms)
             mssDictList[key] = ms
 
@@ -59,4 +72,9 @@ for key in mssDictList:
     mssDictList[key] = ms
 
 
-#print(mssDictList)
+#my_favourity_stringy="de stringy Notre string de regex is otre  fucking all de Notre of us over otre"
+
+
+
+
+print(ms) 

@@ -1,2 +1,4 @@
-r"(otre)"," €"
-r"(de)+", "daggerman"
+(otre)
+€
+de
+daggerman

@@ -87,7 +87,6 @@ for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    #ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('\r\n', '') for word in ms]
     ms = [word.translate(str.maketrans('', '', ',!?"\r\n.()[]:')) for word in ms]
     mssDictList[key] = ms
     if regex != 0:
@@ -293,9 +292,9 @@ for word in ur:
 #Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
 
 # Print %ur if debug=1
-# logfile
+# create leitfehler list
 if debug == 1:
-    with open("log_py.txt", "w") as log:
+    with open("leitfehler_list.txt", "w") as log:
         for k in sorted(score, key=lambda x: score[x], reverse=True):
             if ur[k] > 0 and score[k] > scoremax/100:
                 log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")

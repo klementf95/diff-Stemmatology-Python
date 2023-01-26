@@ -1,6 +1,34 @@
-from collections import defaultdict
+#!/usr/bin/python
+
 import re
+from collections import defaultdict
+import argparse
 import csv
+
+  
+# defining parameters (user input)
+parser = argparse.ArgumentParser(
+    prog = 'Leitfehler Detection',
+    description= 'A Python Script for detecting Leitfehlers from a given text collation.',
+    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
+
+parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection')
+parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
+parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
+parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
+parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts. See the re.sub() format. Example: r"[\s\|]+", ""')
+
+args = parser.parse_args()
+
+cut = args.cut
+debug = args.debug
+delimiter = args.delimiter
+encoding = args.encoding
+regex = args.regex
+
+
+weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
 
 scoremax = 1
 mssDict = defaultdict(str)
@@ -12,37 +40,12 @@ globalWordCountDict = defaultdict(dict)
 leit = []
 globalLeit = defaultdict(int)
 ur = defaultdict(int)
-weight = 20
-
 mssDictList = defaultdict(list)
 mssListTemp = []
 
-
-with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
-    reader = csv.DictReader(fp, delimiter=',')
-    for label in reader.fieldnames:
-        fp.seek(0)
-        for inst in reader:
-            mssListTemp.append(inst[label])
-        mssDictList[label.ljust(9)] = mssListTemp.copy()
-        mssListTemp.clear()
-
-
-msLabelArray = list(mssDictList.keys())
-numOfMss = len(msLabelArray)
-    
-    
-for key in mssDictList:
-    ms = mssDictList[key][1:]
-    if ms and ms[-1] == ' ':
-        ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
-    mssDictList[key] = ms
-    mssDict[key] = "".join(mssDictList[key])
-    ms = [word.replace(' ','') for word in ms]
-    mssDictList[key] = ms
-
-
+#the main part of the script calculates a score for each word in the manuscripts based
+# on the number of manuscripts in which it appears and its global frequency
+# in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
 
 
 def rating(a1, a2, a3, word, otherWord):
@@ -84,15 +87,27 @@ for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace(r'\s[^\s]*\*[^\s]*', ' €').replace('\r\n', '') for word in ms]
+    ms = [word.translate(str.maketrans('', '', ',!?"\r\n.()[]:')) for word in ms]
     mssDictList[key] = ms
+    if regex != 0:
+        with open(regex) as f:
+            count = 0
+            pattern = []
+            repl = []
+            for inst in f:
+                if count % 2 == 0:
+                    pattern.append(inst)
+                else:
+                    repl.append(inst)
+                count += 1
+        regexDict = dict(zip(pattern,repl))
+        for pat, rep in regexDict.items():
+            ms = [re.sub(pat.replace("\n", ""), rep, word) for word in ms]
+            mssDictList[key] = ms
     mssDict[key] = "".join(mssDictList[key])
     ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
-
-
-cut = cut * numOfMss * numOfMss / 2500
-# cut: This variable is a threshold for the 'globalLeit' function
+           
 
     
 for msIndex in mssDict.keys():
@@ -260,8 +275,6 @@ for word in ur:
 
 
 
-
-
 def diff(list_text1, list_text2):
     temp_diff = []
     for item1, item2 in zip(list_text1, list_text2):
@@ -282,20 +295,21 @@ def dodiff(a1, a2):
         sequenceArray = hunk
         distInHunk = 0
     for sequence in sequenceArray:
-#   if($word=~/€/){$distInHunk=-2} # €-wildcard matches anything
-           if score.get(word) and scoremax * weight != 0:
-                distInHunk += score[word] / scoremax * weight
-                distInHunk += 1
+        if score.get(word) and scoremax * weight != 0:
+            distInHunk += score[word] / scoremax * weight
+            distInHunk += 1
     dist += distInHunk
     return int(dist + 0.5)
 
 
 #dodiff(wordArrayMs1, wordArrayMs2)
 
-#print(len(msLabelArray)) # print length of array
-#print(msLabelArray[0]) # erste zeile
+print(len(msLabelArray)) # print length of array
+print(msLabelArray[0]) # erste zeile
 testDict = defaultdict()
 testList = []
+
+
 
 for msIndex in range(1,len(msLabelArray)):
     print(msLabelArray[msIndex])
@@ -305,6 +319,11 @@ for msIndex in range(1,len(msLabelArray)):
         wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
         wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
         el = dodiff(wordArrayMs1, wordArrayMs2)
+    
+        print(" {} ".format(el), end='') 
+    print()
+
+
 #Hier wird noch dodiff gecalled, wobei der gesamte content eines textes mit dem gesamten des andereren 
 #         ausgegegben und mit whitespaces umrahmt wird.
 # jeweils zeilenpaare werden angeschaut und dafür beide Zeilen in Frage ausgegeben:
@@ -314,8 +333,9 @@ for msIndex in range(1,len(msLabelArray)):
         # $matrix->assign($otherMsIndex+1,$msIndex+1,$el));
         #testList.append(el)
         #testDict[msIndex] = el
-        print(" {} ".format(el))
-    print("")
+   
+        #print("")
+    
 
       # assigning a score to the pot. leitfehler in wlist();
             
@@ -335,3 +355,4 @@ for msIndex in range(1,len(msLabelArray)):
             #Aufrufen der Scorewerte für das Wort, mit der zusätzlichen Gewichtung f
             # für eine größere Anzahl an Abweichungen
             # Was macht scoremax?
+            

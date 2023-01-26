@@ -12,12 +12,12 @@ parser = argparse.ArgumentParser(
     description= 'A Python Script for detecting Leitfehlers from a given text collation.',
     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
 
-parser.add_argument('-f', '--file', dest='file', required=True, help='Filepath for the text collation')
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='cut off threshold for leitfehler detection')
-parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
-parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Delimiter of input file (default: comma)')
-parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Encoding of input file (default: utf-8) See other available options for function open()')
-parser.add_argument('-r', '--regex', dest='regex', default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts. See the re.sub() format. Example: r"[\s\|]+", ""')
+parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection')
+parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
+parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
+parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
+parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts. See the re.sub() format. Example: r"[\s\|]+", ""')
 
 args = parser.parse_args()
 
@@ -87,7 +87,8 @@ for key in mssDictList:
     ms = mssDictList[key][1:]
     if ms and ms[-1] == ' ':
         ms = ms[:-1]
-    ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('\r\n', '') for word in ms]
+    #ms = [word.replace(',','').replace('!','').replace('?','').replace('"','').replace('.','').replace('[', '').replace(']', '').replace('(', '').replace(')', '').replace('\r\n', '') for word in ms]
+    ms = [word.translate(str.maketrans('', '', ',!?"\r\n.()[]:')) for word in ms]
     mssDictList[key] = ms
     if regex != 0:
         with open(regex) as f:
@@ -107,8 +108,7 @@ for key in mssDictList:
     mssDict[key] = "".join(mssDictList[key])
     ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
-     
-       
+           
 
 print(len(msLabelArray)) # print length of array
 print(msLabelArray[0]) # erste zeile

@@ -18,15 +18,15 @@ weight = 20
 mssDictList = defaultdict(list)
 mssListTemp = []
 
-'''parser = argparse.ArgumentParser(
-    prog = 'Leitfehler Detection',
-    description= 'A Python Script for detecting Leitfehlers from a given text collation.',
-    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
+# parser = argparse.ArgumentParser(
+#     prog = 'Leitfehler Detection',
+#     description= 'A Python Script for detecting Leitfehlers from a given text collation.',
+#     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
 
-parser.add_argument('-r', '--regex', dest='regex',  required=False, help=""Filepath to a textfile for additional regex patterns to be substituted within the texts.(optional)
- See the re.sub format. Example: r'[\s\|]+', '' ' "")
-args = parser.parse_args()
-'''
+# parser.add_argument('-r', '--regex', dest='regex',  required=False, help=""Filepath to a textfile for additional regex patterns to be substituted within the texts.(optional)
+#  See the re.sub format. Example: r'[\s\|]+', '' ' "")
+# args = parser.parse_args()
+
 
 with open('./test_data/coco-besoin.csv','r', newline='', encoding='utf-8') as fp:
     reader = csv.DictReader(fp, delimiter=',')

@@ -21,11 +21,11 @@ Aufbau:
     X Code Integrität: Fehler Kontrolle und Chunk by Chunk Input durch beide Versionen jagen und Vergleichen
     X Alternative Preprocessing Pipeline für coco Format
     X Wortablage und Indexierung von Elementen (Wörtern, wie Texten) im coco Format (check specs at the bottom of the file)
-    - Methode des Text Vergleichs im coco Format
+    X Methode des Text Vergleichs im coco Format
     X Fehler bei keinem Input
     X seperator + encoding flags, die als start input mitgeliefert werden
     X Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
-    - Kontrolle der Label zu distance matrix Abstände
+    X Kontrolle der Label zu distance matrix Abstände
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
   - Nice to have
     X Fehler bei Input im non-coco Format (böse באַבאַלז!)
@@ -33,6 +33,7 @@ Aufbau:
     X bessere coding practice - nicht alles in einer Funktion
     X Normalisieren der Libraries für StdInput
     - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
+    - Dokumentation + clean up, Kommentare
 
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output

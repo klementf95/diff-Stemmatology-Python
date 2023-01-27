@@ -78,6 +78,32 @@ with open(args.file,'r', newline='', encoding=encoding) as f:
         mssDictList[label.ljust(9)] = mssListTemp.copy()
         mssListTemp.clear()
 
+def diff(list_text1, list_text2):
+    temp_diff = []
+    for item1, item2 in zip(list_text1, list_text2):
+        if item1 != item2:
+            if item1 is not None and item1 != '':
+                temp_diff.append(item1)
+            if item2 is not None and item2 != '':
+                temp_diff.append(item2)
+    return temp_diff
+
+def dodiff(a1, a2):
+    wordArrMs1 = a1
+    wordArrMs2 = a2
+
+    diffArray = diff(wordArrMs1, wordArrMs2)
+    dist = 0
+    for hunk in diffArray:
+        sequenceArray = hunk
+        distInHunk = 0
+        for word in sequenceArray:
+            if score[word] and scoremax * weight != 0:
+                distInHunk += score[word] / scoremax * weight
+            distInHunk += 1
+        dist += distInHunk
+    return int(dist + 0.5)
+
 
 msLabelArray = list(mssDictList.keys())
 numOfMss = len(msLabelArray)
@@ -107,22 +133,7 @@ for key in mssDictList:
     mssDict[key] = "".join(mssDictList[key])
     ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
-           
-
-print(len(msLabelArray)) # print length of array
-print(msLabelArray[0]) # erste zeile
-
-
-for msIndex in range(1,len(msLabelArray)):
-    print(msLabelArray[msIndex])
-    # schreib das label in die zeile
-    for otherMsIndex in range(0,msIndex):
-        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        
-        wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
-        wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
-           
-
-
+              
 
 cut = cut * numOfMss * numOfMss / 2500
 # cut: This variable is a threshold for the 'globalLeit' function
@@ -290,6 +301,23 @@ for word in ur:
     scoremax = max(scoremax, score[word])
     
 #Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
+
+print(len(msLabelArray)) # print length of array
+print(msLabelArray[0]) # erste zeile
+
+
+for msIndex in range(1,len(msLabelArray)):
+    current_key = msLabelArray[msIndex]
+    print(current_key, end='')
+    # Add spaces to align the labels
+    # schreib das label in die zeile
+    for otherMsIndex in range(0,msIndex):
+        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        
+        wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
+        wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
+        el = dodiff(wordArrayMs1, wordArrayMs2)
+        print(" {} ".format(el), end='') 
+    print()
 
 # Print %ur if debug=1
 # create leitfehler list

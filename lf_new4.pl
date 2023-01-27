@@ -55,7 +55,6 @@ while (<FH>)
         $mssHash{$msLabelArray[$numOfMss]}=~s/\[[^\]]+\]//g; # remove  []
 
         $numOfMss++;  
-        print $mssHash
     }
 }
 
@@ -148,32 +147,32 @@ sub dodiff
 }
 
 
-sub outdiff
-{
-    my $a="Zz";
-    my $b="Br";
+# sub outdiff
+# {
+#     my $a="Zz";
+#     my $b="Br";
 
-    #print $mssHash{$a}."\n";
-    #print $mssHash{$b}."\n";
+#     #print $mssHash{$a}."\n";
+#     #print $mssHash{$b}."\n";
 
-    my @arr1 = split('',$mssHash{$a});
-    my @arr2 = split('',$mssHash{$b});
+#     my @arr1 = split('',$mssHash{$a});
+#     my @arr2 = split('',$mssHash{$b});
 
-    my @diffArray =  diff( \@arr1, \@arr2 );
+#     my @diffArray =  diff( \@arr1, \@arr2 );
 
-    foreach my $i (@diffArray)
-    {
-        print "(".@$i."): ";
-        foreach my $j (@$i)
-        {
-            foreach my $k (@$j)
-            {
-                print $k.",";
-            }
-        }
-        print "\n";
-    }
-}
+#     foreach my $i (@diffArray)
+#     {
+#         print "(".@$i."): ";
+#         foreach my $j (@$i)
+#         {
+#             foreach my $k (@$j)
+#             {
+#                 print $k.",";
+#             }
+#         }
+#         print "\n";
+#     }
+# }
 
 sub wlist
 {

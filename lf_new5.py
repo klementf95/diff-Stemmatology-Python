@@ -3,21 +3,24 @@
 import re
 from collections import defaultdict
 import argparse
+from argparse import RawTextHelpFormatter
 import csv
 
   
 # defining parameters (user input)
 parser = argparse.ArgumentParser(
     prog = 'Leitfehler Detection',
-    description= 'A Python Script for detecting Leitfehlers from a given text collation.',
-    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.')
+    description= 'A Python Script for detecting Leitfehlers from a given text collation. The leitfehlers are pasted into a separate text document named "leitfehler_list.txt". Additionally it produces a lower-triangular distance matrix which can then be further used as input for PHYLIP and its various functionalities.\nThe script starts by reading in the input, which consists of tabular data (in either .csv or .txt format) with its columns  containing labels for the manuscripts followed by a line for every word in each manuscript. The script standardises the input by removing punctuation, it also stores the labels and contents of the manuscripts. Optionally the user can provide the script also with a file of regex or other substitution terms which are then parsed through the preprocessing pipeline as an additional step.\nThe function called dodiff takes two arrays of words in an input and returns the numeric difference between the two arrays. For this it compares the contents of each manuscript to the contents of every other manuscript that precedes it in the array.\nThe actual leitfehler calculation is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.\nThe script calculates a score for each word in the manuscripts based on the number of manuscripts in which it appears and its global frequency in the manuscripts.',
+    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
 
-parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation')
+parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
 parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection')
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
 parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
 parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
-parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts. See the re.sub() format. Example: r"[\s\|]+", ""')
+parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts, expects the format: every substitution expression consisting of two lines where\nfirst line = matching pattern\nsecond line = substitution pattern')
+parser.add_argument('-w', '--weight', dest='weight', type=int, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
+parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: ')
 
 args = parser.parse_args()
 
@@ -26,11 +29,9 @@ debug = args.debug
 delimiter = args.delimiter
 encoding = args.encoding
 regex = args.regex
+weight = args.weight
+scoremax = args.scoremax
 
-
-weight = 20 # weight. lf are counted .-times more for the best of them, the others proportionally down to 1
-
-scoremax = 1
 mssDict = defaultdict(str)
 msLabelArray = []
 numOfMss = 0
@@ -43,9 +44,6 @@ ur = defaultdict(int)
 mssDictList = defaultdict(list)
 mssListTemp = []
 
-#the main part of the script calculates a score for each word in the manuscripts based
-# on the number of manuscripts in which it appears and its global frequency
-# in the manuscripts. It also calculates a scoremax value, which is the maximum score among all the words.
 
 
 def rating(a1, a2, a3, word, otherWord):
@@ -61,7 +59,7 @@ def ratings(a1, a2, a3, word, otherWord):
     return s
 
 
-# Vierer wird in der aktuellen Variante nicht verwendet, da der Fall debug = 3 nicht im Einsatz ist.
+# vierer is not used at the moment
 
 def vierer(t0, t1, t2, t3, word, otherWord):
     if debug == 3:
@@ -136,18 +134,15 @@ for key in mssDictList:
               
 
 cut = cut * numOfMss * numOfMss / 2500
-# cut: This variable is a threshold for the 'globalLeit' function
 
     
 for msIndex in mssDict.keys():
     msContent = mssDict.get(msIndex)
     msContent = re.sub(r"[\s\|]+", " ", msContent)
-    # für jedes label/jeden Text, nimmt den Content und normalisiert wörter
     while re.match(r"^\s*([^\s]+)", msContent): # while another text can be found in $msContent
         m = re.match(r"^\s*([^\s]+)", msContent)
         word = m.group(1)
         msContent = msContent[m.end():]
-        # .group(1): the word found
         # increment counter for the word found in the ms specific word 
         # mapping and in the global word mapping       
         # mssWordCountDict = {text:{word:count},
@@ -185,33 +180,22 @@ for msIndex in mssDict.keys():
     
 for msIndex in range(1, len(msLabelArray)):
     currMsLabel = msLabelArray[msIndex]
-
-    # für jedes Manuskript, geh anhand der Indizes die Label durch und speicher sie weg, außer das erste.
-
     for otherMsIndex in range(0, msIndex):
         otherMsLabel = msLabelArray[otherMsIndex]
-        
-        # für jedes Manuskript, geh anhand der Indizes die Label aller anderen Manuscripte durch und speicher sie weg.   
-
-        for word in globalWordCountDict.keys(): # jedes word mit seiner         globalen Anzahl iterieren
+        for word in globalWordCountDict.keys(): 
             #only words with at least 3 characters are considered
             # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
             # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
                 if re.match(r"...", word) and abs(mssWordCountDict[currMsLabel].get(word, 0) - mssWordCountDict[otherMsLabel].get(word, 0)) > 0 and mssWordCountDict[currMsLabel].get(word, 0) + mssWordCountDict[otherMsLabel].get(word, 0) < 2:
                     globalLeit[word] = globalLeit.get(word, 0) + 1
-
-    
     
 
 
 for word in globalLeit.keys():
-    if globalLeit[word] > cut: # Threshhold, ob ein wort dargestellt/verarbeitet werden soll, default = 0, kann noch angepasst werden
-        # geht jeden counter für jedes Wort durch und danach in folge jedes andere Wort
+    if globalLeit[word] > cut: 
         for otherWord in globalLeit.keys():
-            # wenn der Counter des Wortes geringer ist, als bei dem verglichenen, dann initiere die variable tab mit 0en (?)
             if globalLeit[otherWord] > cut and word < otherWord:
                 tab = [0, 0, 0, 0]
-
                 for msIndex in range(1, len(msLabelArray)):
                     currMsLabel = msLabelArray[msIndex]
                     # für jeden Index in einer Iteration der Label, speicher jedes Label in eine temp variable, 
@@ -271,15 +255,10 @@ for word in globalLeit.keys():
 # Calculate counter: number of occurences of word 
 for word in globalLeit.keys():
     counter = 0
-
-    # Iterate over all mss and 
-    # count the number of mss that contain word
     for msIndex in range(1, len(msLabelArray)):
         currMsLabel = msLabelArray[msIndex]
-
         if mssWordCountDict[currMsLabel].get(word, 0) != 0:
-            counter += 1
-    
+            counter += 1   
     if counter > numOfMss/2:
         counter = numOfMss - counter
     
@@ -300,7 +279,7 @@ for word in globalLeit.keys():
 for word in ur:
     scoremax = max(scoremax, score[word])
     
-#Scoremax ist eine Art lowerbound threshold für die Listung von scorewerten        
+#Scoremax ist eine Art unsichtbare Hand für die Listung von scorewerten        
 
 print(len(msLabelArray)) # print length of array
 print(msLabelArray[0]) # erste zeile
@@ -309,18 +288,13 @@ print(msLabelArray[0]) # erste zeile
 for msIndex in range(1,len(msLabelArray)):
     current_key = msLabelArray[msIndex]
     print(current_key, end='')
-    # Add spaces to align the labels
-    # schreib das label in die zeile
-    for otherMsIndex in range(0,msIndex):
-        # Anzeil der Zeilen mal Spalten (eg. für den aktuellen Text, geh alle zuvor bearbeiteten durch) und mache pro Element/Text:        
+    for otherMsIndex in range(0,msIndex):      
         wordArrayMs1 = mssDictList[msLabelArray[msIndex]]
         wordArrayMs2 = mssDictList[msLabelArray[otherMsIndex]]
         el = dodiff(wordArrayMs1, wordArrayMs2)
         print(" {} ".format(el), end='') 
     print()
 
-# Print %ur if debug=1
-# create leitfehler list
 if debug == 1:
     with open("leitfehler_list.txt", "w") as log:
         for k in sorted(score, key=lambda x: score[x], reverse=True):
@@ -328,5 +302,5 @@ if debug == 1:
                 log.write(f"{k}  --  {int(score[k])} - {ur[k]} {int(score[k]/scoremax*100)}%\n")
                 
 # print ins log file pro zeile:
-#score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.
+# score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.
 

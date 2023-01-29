@@ -9,8 +9,7 @@ import time
 
 tic = time.perf_counter()
 
-
-  
+ 
 # defining parameters (user input)
 parser = argparse.ArgumentParser(
     prog = 'Leitfehler Detection',
@@ -18,12 +17,11 @@ parser = argparse.ArgumentParser(
     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
 
 parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score(effective range between 400 and 600)')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score, can cut down runtime considerably (noticeable effect starts at roughly 400)')
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
-parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
+parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: ",")')
 parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
 parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts, expects the format: every substitution expression consisting of two lines where\nfirst line = matching pattern\nsecond line = substitution pattern')
-parser.add_argument('-w', '--weight', dest='weight', type=float, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
 parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: weighing for probability of leitfehler detection')
 parser.add_argument('-v', '--verbose_vote', dest='verbose_vote', action='store', type=int, default=0, choices=[0,1], help='Optional: Binary indicator 0 : only normal leitfehler list 1 : and a leitfehler list with relevance for each stemma')
 
@@ -34,7 +32,6 @@ debug = args.debug
 delimiter = args.delimiter
 encoding = args.encoding
 regex = args.regex
-weight = args.weight
 scoremax = args.scoremax
 verbose_vote = args.verbose_vote
 
@@ -49,6 +46,7 @@ globalLeit = defaultdict(int)
 ur = defaultdict(int)
 mssDictList = defaultdict(list)
 mssListTemp = []
+weight = 20
 
 
 
@@ -64,20 +62,6 @@ def ratings(a1, a2, a3, word, otherWord):
 
     return s
 
-if delimiter == 't':
-    delimiter = '\t'
-
-with open(args.file,'r', newline='', encoding=encoding) as f:
-    if delimiter == '\t':
-        reader = csv.DictReader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
-    else:
-        reader = csv.DictReader(f, delimiter=delimiter)
-    for label in reader.fieldnames:
-        f.seek(0)
-        for inst in reader:
-            mssListTemp.append(inst[label])
-        mssDictList[label.ljust(9)] = mssListTemp.copy()
-        mssListTemp.clear()
 
 def diff(list_text1, list_text2):
     temp_diff = []
@@ -88,6 +72,7 @@ def diff(list_text1, list_text2):
             if item2 is not None and item2 != '':
                 temp_diff.append(item2)
     return temp_diff
+
 
 def dodiff(a1, a2):
     wordArrMs1 = a1
@@ -106,9 +91,23 @@ def dodiff(a1, a2):
     return int(dist + 0.5)
 
 
+if delimiter == 't':
+    delimiter = '\t'
+
+with open(args.file,'r', newline='', encoding=encoding) as f:
+    if delimiter == '\t':
+        reader = csv.DictReader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
+    else:
+        reader = csv.DictReader(f, delimiter=delimiter)
+    for label in reader.fieldnames:
+        f.seek(0)
+        for inst in reader:
+            mssListTemp.append(inst[label])
+        mssDictList[label.ljust(9)] = mssListTemp.copy()
+        mssListTemp.clear()
+        
 msLabelArray = list(mssDictList.keys())
 numOfMss = len(msLabelArray)
-            
     
 for key in mssDictList:
     ms = mssDictList[key][1:]
@@ -131,10 +130,13 @@ for key in mssDictList:
         for pat, rep in regexDict.items():
             ms = [re.sub(pat.replace("\n", ""), rep, word) for word in ms]
             mssDictList[key] = ms
-    mssDict[key] = "".join(mssDictList[key])
+    if delimiter == '\t':
+        mssDict[key] = " ".join(mssDictList[key])
+    else:
+        mssDict[key] = "".join(mssDictList[key])
     ms = [word.replace(' ','') for word in ms]
     mssDictList[key] = ms
-              
+
 
 cut = cut * numOfMss * numOfMss / 2500
 
@@ -156,11 +158,9 @@ for msIndex in mssDict.keys():
         #                     {word:count},
         #                     {word:count},
         #                     {word:count}}
-                                              
         mssWordCountDict[msIndex][word] = mssWordCountDict[msIndex].get(word, 0) + 1
         globalWordCountDict[word] = globalWordCountDict.get(word, 0) + 1
 
-    
     
     
     # Hash map over all words in the mss; the keys of the dict are words, 
@@ -168,17 +168,11 @@ for msIndex in mssDict.keys():
 
 
     # finding candidates for leitfehler
-
-        # Matrix of mss that contains a dict; the keys of the dict are words
-        # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
-
-        # Wörter die insgesamt weniger als zweimal innerhalb von zwei verglichenen Manuskripten vorkommen und hierbei in beiden nicht gleich oft, 
-        # werden als Kandidaten herangezogen.
-        # Hierbei werden zwei Counter bespielt, ein globaler und einer für jede spezische Manuskript kombination, 
-        # um in einer Abstimmung zur Eingnung von Termen zum Schluss zu dienen.
-        # Paare an Leitfehler, die nur in wenigen Texten vorkommen, werden höher bewertet.
-
-
+    # Matrix of mss that contains a dict; the keys of the dict are words
+    # and the value is a bool: 1=is a leitfehler candidate, 0=is not a leitfehler candidate
+    # Words that occur less than twice in total within two compared manuscripts and not in both with the same values are used as candidates
+    # Here two counters are raised, one global and one for each specific manuscript combination, to be used in a vote for the suitability of terms at the end
+    # pairs of leading errors, which occur only in a few texts, are evaluated more highly
 
     
 for msIndex in range(1, len(msLabelArray)):
@@ -186,12 +180,13 @@ for msIndex in range(1, len(msLabelArray)):
     for otherMsIndex in range(0, msIndex):
         otherMsLabel = msLabelArray[otherMsIndex]
         for word in globalWordCountDict.keys(): 
-            #only words with at least 3 characters are considered
-            # wenn die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte abweicht
-            # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
+            # only words with at least 3 characters are considered
+            # if the number of occurrences of the word within the two compared texts differs
+            # AND the total number of occurrences of the word within the two compared texts is less than 2
                 if re.match(r"...", word) and abs(mssWordCountDict[currMsLabel].get(word, 0) - mssWordCountDict[otherMsLabel].get(word, 0)) > 0 and mssWordCountDict[currMsLabel].get(word, 0) + mssWordCountDict[otherMsLabel].get(word, 0) < 2:
                     globalLeit[word] = globalLeit.get(word, 0) + 1
-                    
+
+               
 if verbose_vote == 1:
     with open("leitfehler_vote.txt", "w") as log2_file:
         for word in globalLeit.keys():
@@ -214,14 +209,13 @@ for word in globalLeit.keys():
                 tab = [0, 0, 0, 0]
                 for msIndex in range(1, len(msLabelArray)):
                     currMsLabel = msLabelArray[msIndex]
-                    # für jeden Index in einer Iteration der Label, speicher jedes Label in eine temp variable, 
-                    # um durch die Texte zu iterieren und sie zu vergleichen
+                    # for each index in an iteration of the labels, store each label in a temp variable, 
+                    # to iterate through the texts and compare them
                     # Both, word and otherWord are in the current ms
                     if word in mssWordCountDict[currMsLabel] and otherWord in mssWordCountDict[currMsLabel]:
                         tab[0] += 1
-                    #Eine reihe an vergleichen wird aufgestellt:
-                    #Wort1 und Wort2 weeden daraufhin verglichen, ob eines der beiden, beide oder keines in einem manuskript 
-                    #enthalten ist oder nicht
+                    # A series of comparisons is made:
+                    # word1 and word2 are compared to see if either, both, or neither is included in a manuscript. 
                     # Only word is in the the current ms
                     elif word in mssWordCountDict[currMsLabel] and otherWord not in mssWordCountDict[currMsLabel]:
                         tab[1] += 1
@@ -257,8 +251,6 @@ for word in globalLeit.keys():
                         ur[word] = ur[word] + (r - 1) ** 2 * s
                         ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
 
-#Counter/Nr. of occurences ist unabhängig von der Matrix zuvor, das relationale Auftreten von einem Wort
-# im Verhältnis zu anderen steht nicht mit dem absoluten im Konflikt.
 
 # Calculate counter: number of occurences of word 
 for word in globalLeit.keys():
@@ -269,15 +261,10 @@ for word in globalLeit.keys():
             counter += 1   
     if counter > numOfMss/2:
         counter = numOfMss - counter
-    
-    #Wenn das Wort häufiger als in jedem zweiten Text vorkommt, 
-    #dann reduzier den Wert um die Anzahl der texte.
-    
-    #ur, which stores the scores for each leitfehler candidate,
-    #the scores in ur are then normalized by dividing them by the number of occurrences of
-    #each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
-    #dict called %score (?)
-
+    # If the word occurs more often than in every second text, then reduce the value by the number of texts.
+    # ur, which stores the scores for each leitfehler candidate,
+    # the scores in ur are then normalized by dividing them by the number of occurrences of
+    # each leitfehler candidate in the manuscripts, and the resulting values are stored in a 
     if globalLeit[word] * counter != 0: # if (globalLeit counter for this word * counter) not 0
         score[word] = ur[word] / counter
     else:
@@ -287,10 +274,10 @@ for word in globalLeit.keys():
 for word in ur:
     scoremax = max(scoremax, score[word])
     
-#Scoremax ist eine Art unsichtbare Hand für die Listung von scorewerten        
 
 print(len(msLabelArray)) # print length of array
-print(msLabelArray[0]) # erste zeile
+print(msLabelArray[0]) # first line
+
 
 
 for msIndex in range(1,len(msLabelArray)):

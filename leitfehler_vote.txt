@@ -1,170 +1,271 @@
-rationaliste (30) : C:1 D:1 J:1 M:1 S:1 
-cle (10) : 
-connait (30) : C:1 J:1 M:1 U:1 
-scime (24) : C:1 J:1 
-chuchottements (28) : C:1 J:1 M:1 
-talents (18) : J:1 
-toi-même (30) : C:1 D:1 J:1 M:1 S:1 
-avides (10) : C:1 D:1 F:1 J:1 L:1 M:1 S:1 U:1 V:1 
-gourmandises (10) : 
-coup (24) : C:1 D:1 F:1 J:1 M:1 S:1 V:1 
-dele (10) : 
-rapidement (28) : C:1 D:1 F:1 J:1 M:1 S:1 
-rationnaliste (30) : B:1 F:1 L:1 U:1 V:1 
-celle (30) : B:1 F:1 L:1 U:1 V:1 
-connaît (30) : B:1 D:1 F:1 L:1 S:1 V:1 
-cîme (30) : B:1 F:1 L:1 U:1 V:1 
-chuchotements (28) : B:1 D:1 F:1 L:1 S:1 U:1 V:1 
-Toi-même (30) : B:1 F:1 L:1 U:1 V:1 
-arides (10) : B:1 
-gourmandise (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 U:1 V:1 
-n'ai (28) : B:1 F:1 J:1 L:1 U:1 V:1 
-Jai (28) : C:1 D:1 M:1 S:1 
-nime (18) : C:1 M:1 
-grill (10) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 U:1 V:1 
-retour (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-donne (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-richesse (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-gloire (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-silence (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-cet (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-argent (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-quel (16) : B:1 C:1 F:1 J:1 L:2 M:1 S:1 V:1 
-prendre (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-contribuer (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-progrès (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-littérature (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-désire (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-n'aurai (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-confirmation (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-ont (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-touché (18) : B:1 C:1 F:1 J:1 L:1 M:1 S:1 V:1 
-cime (18) : D:1 S:1 
-gril (10) : D:1 
-méprise (18) : B:1 C:1 D:1 J:1 L:1 M:1 S:1 V:1 
-tranche (24) : B:1 C:1 D:1 J:1 L:1 M:1 S:1 
-jour (24) : B:1 C:1 D:1 J:1 L:1 M:1 S:1 
-neige (24) : B:1 C:1 D:1 J:1 L:1 M:1 S:1 
-rassassier (9) : F:1 M:2 
-Méprise (18) : F:1 U:1 
-Tranche (24) : F:1 U:1 V:1 
-dune (10) : F:1 
-non (10) : B:1 C:1 D:1 F:1 L:1 M:1 S:1 U:1 V:1 
-croit (10) : B:1 C:1 D:1 F:1 L:1 M:1 S:1 U:1 V:1 
-conviées (10) : B:1 C:1 D:1 F:1 L:1 M:1 S:1 U:1 V:1 
-vois (10) : B:1 C:1 D:1 F:1 L:1 M:1 S:1 U:1 V:1 
-imprévisible (18) : B:1 C:1 D:1 F:1 L:1 M:1 S:1 V:1 
-croient (10) : J:1 
-conviée (10) : J:1 
-prévisible (10) : J:1 
-nest (18) : J:1 M:1 
-m'inspirent (10) : B:1 C:1 D:1 F:1 J:1 M:1 S:1 U:1 V:1 
-simaginer (18) : B:1 C:1 D:1 F:1 J:1 M:1 S:1 V:1 
-minspire (10) : L:1 
-traqu (10) : L:1 
-imaginer (10) : L:1 
-entouré (10) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 U:1 V:1 
-proie (10) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 U:1 V:1 
-chambre (10) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 U:1 V:1 
-Perds (18) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 U:1 
-défendables (10) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 U:1 V:1 
-n'aie (18) : B:1 C:1 D:1 F:1 J:1 L:1 S:1 V:1 
-proi (10) : M:1 
-perds (10) : M:1 
-défavorables (10) : M:1 
-nai (10) : M:1 
-rassasier (1) : B:2 C:2 D:2 F:1 J:2 L:2 S:2 U:2 V:2 
-tombera (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-crépuscule (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-problème (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-résolu (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-divisant (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-lumière (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-l'obscurité (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-c'est (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-lieux (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-n'existent (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-exemple (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-marcher (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-rivage (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-défi (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-effroyable (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-l'éternité (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-lance (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-existence (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-mouvement (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-perpétuel (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-fuite (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-perpétuelle (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-rien (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-n'enrichit (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-Suisses (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-rester (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-assis (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-devant (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-pièce (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-exposée (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-danger (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-sentir (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-cerner (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-Elle (5) : B:1 C:2 D:2 F:2 J:1 L:1 M:2 S:2 V:1 
-objets (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-pointus (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-m'entourent (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-poids (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-toit (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-masse (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-murs (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-l'eau (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-chaleur (18) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 
-sang (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-sentiment (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-sécurité (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-qu'il (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-proche (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-rappeler (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-veut (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-oublier (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-remplir (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-pages (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-blanches (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-avec (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-belles (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-combinaisons (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-cerveau (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-Etant (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-donné (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-m'assurer (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-rassemble (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-ces (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-livre (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-l'offre (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-épouvantable (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-cinq (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-fort (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-voir (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-incarnée (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-traverse (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-clairière (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-entendre (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-voix (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-chuchote (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-Vis (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-prends (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-désires (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-peur (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-lois (18) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 
-qu'est-ce (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-bon (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-conseil (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-n'existe (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-impitoyable (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-s'avise (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-mettre (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-millions (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-d'années (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-lézard (10) : B:1 C:1 D:1 F:1 J:1 L:1 M:1 S:1 V:1 
-monde (1) : B:2 C:2 D:1 F:2 J:2 L:2 M:2 S:2 V:2 
-Comme (10) : V:1 
-Prends (10) : V:1 
-Lois (10) : V:1 
+vaccilation (28) : p4:1 
+see (28) : p4:1 
+murky (15) : p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+companion (55) : p3:1 p4:1 p7:1 p9:1 
+horse (55) : p3:1 p4:1 p7:1 p9:1 
+several (60) : p3:1 p4:1 p6:1 p7:1 p9:1 
+dark (15) : p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+moments (48) : p7:1 p10:1 p16:1 
+Shall (15) : p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+outs (28) : p4:1 
+destroy (28) : p4:1 
+bet (28) : p4:1 
+bass (15) : 
+Steel (39) : p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p14:1 p16:1 
+sweet (60) : p3:1 p4:1 p5:1 p7:1 p10:1 
+whenever (63) : p5:1 p8:1 p10:1 p11:1 p14:1 p16:1 
+law's (28) : p4:1 
+cadets (28) : p16:1 
+sights (15) : 
+truth (15) : p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+vacillation (28) : p2:1 p3:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+rue (39) : p2:1 p3:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+murkey (15) : p2:1 
+comparison (55) : p2:1 p5:1 p6:1 p8:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+hare (55) : p2:1 p5:1 p6:1 p8:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+reveal (63) : p2:1 p5:1 p10:1 p12:1 p13:1 p15:1 p16:1 
+dak (15) : p2:1 
+moment's (48) : p2:1 p3:1 p4:1 p5:1 p6:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+Shal (15) : p2:1 
+sits (48) : p2:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+destroys (28) : p2:1 p3:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+bite (60) : p2:1 p5:1 p6:1 p8:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+heats (15) : p2:1 
+bare (39) : p2:1 p3:1 p10:1 
+woman-hood (64) : p2:1 p5:1 p8:1 p10:1 p12:1 p13:1 p15:1 p16:1 
+woman (13) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:2 p16:2 
+inborn (63) : p2:1 p4:1 p7:1 p9:1 p12:1 p13:1 p15:1 
+steel (39) : p2:1 p12:1 p15:1 
+Sweet (60) : p2:1 p6:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+heart's (48) : p2:1 p3:1 p5:1 p6:1 p7:1 p8:1 p9:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+wherever (63) : p2:1 p4:1 p6:1 p9:1 p12:1 p13:1 p15:1 
+laws (55) : p2:1 p3:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 
+odd (48) : p2:1 p5:1 p6:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+cadet's (63) : p2:1 p3:1 p5:1 p6:1 p8:1 p12:1 p13:1 p14:1 p15:1 
+eld (55) : p2:1 p9:1 p13:1 p15:1 p16:1 
+sighs (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+cum (60) : p2:1 p3:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p15:1 p16:1 
+truthes (15) : p2:1 
+clash (48) : p2:1 p4:1 p5:1 p6:1 p8:1 p9:1 p10:1 p11:1 p14:1 p15:1 p16:1 
+motley (39) : p2:1 p4:1 p5:1 p6:1 p8:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+dim (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+outline (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+close (28) : p2:1 p4:1 p5:1 p6:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+doles (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+out (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+vicissitudes (39) : p2:1 p4:1 p5:1 p6:1 p8:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+Feigned (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+hail (48) : p2:1 p4:1 p6:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+distinctions (28) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+precious (28) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+loss (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+lock (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+guarding (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+wide; (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+liken (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+unbridled (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+manly (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+Dauntless (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+laggard (55) : p2:1 p4:1 p6:1 p7:1 p8:1 p9:1 p12:1 p13:1 p14:1 p15:1 
+disease (28) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+wrongdoing (63) : p2:1 p4:1 p6:1 p7:1 p9:1 p13:1 p14:1 p15:1 
+marvels (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+territories (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+yonder (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+inheritance (28) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+sever (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+assured (15) : p2:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+possessions (28) : p2:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+sorrows' (63) : p2:1 p4:1 p5:1 p6:1 p8:1 p9:1 p10:1 p11:1 
+poverty' (55) : p2:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p16:1 
+dispossession (55) : p2:1 p4:1 p5:1 p6:1 p8:1 p10:1 p12:1 p13:1 p14:1 p15:1 
+acres (48) : p2:1 p4:1 p5:1 p7:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+outlandish (28) : p2:1 p4:1 p5:1 p6:1 p7:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+heat (44) : p2:2 p3:1 p7:1 p9:1 p15:1 
+dash (28) : p3:1 p7:1 
+motle (15) : p3:1 
+vissitudes (28) : p3:1 p7:1 
+Feyned (15) : p3:1 
+slee (15) : p3:1 
+mans (39) : p3:1 p7:1 p16:1 
+lait (15) : p3:1 
+bit (39) : p3:1 p7:1 p9:1 
+destinctions (15) : p3:1 
+preceous (15) : p3:1 
+lors (15) : p3:1 
+guardily (15) : p3:1 
+wide (15) : p3:1 
+unbriddled (15) : p3:1 
+lake (15) : p3:1 
+narky (15) : p3:1 
+Daintless (15) : p3:1 
+taggered (15) : p3:1 
+desire (15) : p3:1 
+wrong (48) : p3:1 p8:1 p12:1 p16:1 
+doing (48) : p3:1 p8:1 p12:1 p16:1 
+territores (15) : p3:1 
+gender (15) : p3:1 
+inheritence (15) : p3:1 
+serve (15) : p3:1 
+answered (15) : p3:1 
+permissions (15) : p3:1 
+sorrows (63) : p3:1 p7:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+poverty (39) : p3:1 p4:1 p14:1 
+despossion (28) : p3:1 p7:1 
+aeras (15) : p3:1 
+outlardish (15) : p3:1 
+hearts (13) : p3:1 p4:2 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+Its (39) : p2:1 p3:1 p5:1 p6:1 p7:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+far (15) : p2:1 p3:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+It's (28) : p4:1 p8:1 
+base (48) : p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+cadets' (55) : p4:1 p7:1 p9:1 p10:1 p11:1 
+possession (15) : p4:1 
+these (1) : p2:2 p3:1 p5:2 p6:3 p7:2 p8:2 p9:3 p10:2 p11:2 p12:3 p13:2 p14:2 p15:2 p16:2 
+Heaven (60) : p2:1 p3:1 p4:1 p7:1 p9:1 p12:1 p13:1 p15:1 p16:1 
+Hell (60) : p2:1 p3:1 p4:1 p7:1 p9:1 p12:1 p13:1 p15:1 p16:1 
+Oh' (39) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+How (28) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+counterfeit (39) : p2:1 p3:1 p4:1 p6:1 p7:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+single-handed (48) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p12:1 p13:1 p14:1 p16:1 
+hardness (28) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+Shunner (60) : p2:1 p3:1 p4:1 p7:1 p9:1 p12:1 p13:1 p15:1 p16:1 
+Was (63) : p2:1 p3:1 p4:1 p7:1 p9:1 p13:1 p15:1 p16:1 
+Youth (39) : p2:1 p3:1 p4:1 p6:1 p7:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+fate (15) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+pitiful (15) : p2:1 p3:1 p4:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+palter (48) : p2:1 p3:1 p4:1 p7:1 p8:1 p9:1 p10:1 p12:1 p13:1 p15:1 p16:1 
+use (15) : p5:1 
+horror (15) : p5:1 
+heaven (60) : p5:1 p6:1 p8:1 p10:1 p11:1 p14:1 
+hell (60) : p5:1 p6:1 p8:1 p10:1 p11:1 p14:1 
+bail (28) : p5:1 p10:1 
+how (28) : p5:1 p10:1 
+counter-feit (39) : p5:1 p8:1 p11:1 
+simple (28) : p5:1 p10:1 
+handed (28) : p5:1 p10:1 
+hardiness (28) : p5:1 p10:1 
+lagged (28) : p5:1 p10:1 
+shunner (39) : p5:1 p6:1 p8:1 
+wrong-doing (28) : p5:1 p10:1 
+youth (39) : p5:1 p8:1 p11:1 
+patter (15) : p5:1 
+old (35) : p3:2 p4:2 p5:1 p6:1 p7:2 p8:1 p10:1 p11:1 p12:1 p14:1 
+Thus (28) : p2:1 p3:1 p4:1 p5:1 p7:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+western (15) : p2:1 p3:1 p4:1 p5:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+neighbour's (63) : p2:1 p3:1 p4:1 p5:1 p10:1 p12:1 p13:1 p15:1 
+those (39) : p2:1 p3:1 p4:1 p5:1 p7:1 p8:1 p10:1 p11:1 p13:1 p14:1 p15:1 p16:1 
+way (28) : p6:1 p8:1 
+thus (28) : p6:1 p8:1 
+Western (15) : p6:1 
+neighbours' (55) : p6:1 p8:1 p9:1 p11:1 p14:1 
+aim (15) : p6:1 
+falter (39) : p6:1 p11:1 p14:1 
+aires (39) : p6:1 p8:1 p14:1 
+motlely (28) : p7:1 p9:1 
+neighbours's (15) : p7:1 
+friend (28) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+gadflies (48) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p9:1 p12:1 p13:1 p15:1 p16:1 
+freind (28) : p8:1 p11:1 
+sereal (15) : p8:1 
+gad (48) : p8:1 p10:1 p11:1 p14:1 
+flies (48) : p8:1 p10:1 p11:1 p14:1 
+out-landish (15) : p8:1 
+seized (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+siezed (15) : p9:1 
+dispossesion (39) : p9:1 p11:1 p16:1 
+make (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+flees (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+turns (39) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p12:1 p14:1 p15:1 p16:1 
+astray (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+lasting (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+torrid (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p11:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+wake (15) : p10:1 
+Ok' (15) : p10:1 
+frees (15) : p10:1 
+twins (28) : p10:1 p11:1 
+askay (15) : p10:1 
+His (15) : p10:1 
+bile (15) : p10:1 
+distinction (15) : p10:1 
+lashing (15) : p10:1 
+horrid (15) : p10:1 
+hearts' (15) : p10:1 
+shimmer (15) : p10:1 
+law (28) : p10:1 p15:1 
+mark (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 p16:1 
+hero (28) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p12:1 p13:1 p14:1 p15:1 
+woman's (12) : p2:2 p5:2 p6:2 p8:2 p10:2 p11:1 p12:2 p13:2 p14:2 p15:1 
+sireal (15) : p11:1 
+mak (15) : p11:1 
+viciscitudes (15) : p11:1 
+met (15) : p11:1 
+simplehanded (15) : p11:1 
+haggard (15) : p11:1 
+hour (15) : p11:1 
+faces (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p14:1 p15:1 p16:1 
+Were (39) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p14:1 
+With (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p14:1 p15:1 p16:1 
+rate (48) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p14:1 
+When (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p13:1 p14:1 p15:1 p16:1 
+clas (28) : p12:1 p13:1 
+carage (15) : p12:1 
+forces (15) : p12:1 
+Where (39) : p12:1 p15:1 p16:1 
+note (48) : p12:1 p13:1 p15:1 p16:1 
+Nor (15) : p12:1 
+turn (15) : p13:1 
+makes (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+free (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+love (14) : p2:1 p3:2 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+person (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p15:1 p16:1 
+seaal (15) : p14:1 
+shun (15) : p14:1 
+wheels (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p16:1 
+prevail (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p16:1 
+kings (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p16:1 
+hold (15) : p15:1 
+wheel (15) : p15:1 
+single-handled (15) : p15:1 
+prevails (15) : p15:1 
+proverty (15) : p15:1 
+Kings (15) : p15:1 
+women's (10) : p3:2 p4:2 p7:2 p9:2 p15:1 
+learn (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+lest (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+God (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+observe (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+modesty (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+better (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+August's (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+tawdry (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+breast (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+Hear (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+Grant (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+conquering (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+don't (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+they (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+fill (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+ordinance (15) : p2:1 p3:1 p4:1 p5:1 p6:1 p7:1 p8:1 p9:1 p10:1 p11:1 p12:1 p13:1 p14:1 p15:1 
+meets (15) : p16:1 
+Lest (15) : p16:1 
+god (15) : p16:1 
+modest (15) : p16:1 
+Augusts (15) : p16:1 
+towdry (15) : p16:1 
+breasts (15) : p16:1 
+hear (15) : p16:1 
+Great (15) : p16:1 
+crnquering (15) : p16:1 
+lagg (15) : p16:1 
+here (15) : p16:1 
+womans (15) : p16:1 
+neighbours (15) : p16:1 
+lews (15) : p16:1 
+dont (15) : p16:1 
+fathers (15) : p16:1 
+inheri-tance (15) : p16:1 
+farthers (15) : p16:1 
+fills (15) : p16:1 
+audiance (15) : p16:1 
+its (1) : p2:2 p3:3 p5:2 p6:2 p7:2 p8:2 p9:2 p10:2 p11:2 p12:2 p13:2 p14:2 p15:3 p16:1 

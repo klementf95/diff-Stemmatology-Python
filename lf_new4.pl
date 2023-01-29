@@ -32,9 +32,6 @@ my @msLabelArray;
 # standardisation
 my $numOfMss=0;
 
-# my $filename = './test_data/besoin-all.txt';
-
-# open(FH, '<', $filename) or die $!;
 
 my $in;
 

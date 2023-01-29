@@ -12,7 +12,7 @@ use List::Util qw( min max );
 # 1 : .. and a list of pot. leitfehler (lf) and their score
 # 2 : ..... and a list of pot. lf and the ms. the occur in
 # 3 : ....... and a list of matches of pot. lf
-my $debug=1;
+my $debug=2;
 
 
 my $cut=0; # threshold for globalLeit, currently not used

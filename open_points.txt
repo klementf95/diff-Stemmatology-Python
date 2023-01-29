@@ -34,7 +34,7 @@ Aufbau:
     X Normalisieren der Libraries für StdInput
     - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
     - Dokumentation + clean up, Kommentare
-    - Vierer testen, raushauen?
+    X Vierer testen, raushauen?
 
 -) Blick auf die Package Methoden, Variablen und Parameter
 -) Beispiel Input + Output

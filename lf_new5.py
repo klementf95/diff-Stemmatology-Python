@@ -14,13 +14,14 @@ parser = argparse.ArgumentParser(
     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
 
 parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score(effective range between 400 and 600)')
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
 parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
 parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
 parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts, expects the format: every substitution expression consisting of two lines where\nfirst line = matching pattern\nsecond line = substitution pattern')
-parser.add_argument('-w', '--weight', dest='weight', type=int, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
-parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: ')
+parser.add_argument('-w', '--weight', dest='weight', type=float, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
+parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: weighing for probability of leitfehler detection')
+parser.add_argument('-v', '--verbose_vote', dest='verbose_vote', action='store', type=int, default=0, choices=[0,1], help='Optional: Binary indicator 0 : only normal leitfehler list 1 : and a leitfehler list with relevance for each stemma')
 
 args = parser.parse_args()
 
@@ -31,6 +32,7 @@ encoding = args.encoding
 regex = args.regex
 weight = args.weight
 scoremax = args.scoremax
+verbose_vote = args.verbose_vote
 
 mssDict = defaultdict(str)
 msLabelArray = []
@@ -57,14 +59,6 @@ def ratings(a1, a2, a3, word, otherWord):
     s = len(msLabelArray) - max(a) - min(a)
 
     return s
-
-
-# vierer is not used at the moment
-
-def vierer(t0, t1, t2, t3, word, otherWord):
-    if debug == 3:
-        if t0 != 1 and t1 != 1 and t2 != 1 and t3 != 1:
-            print(f"{word}/{otherWord} {t0} {t1} {t2} {t3}")
 
 
 with open(args.file,'r', newline='', encoding=encoding) as f:
@@ -188,6 +182,19 @@ for msIndex in range(1, len(msLabelArray)):
             # UND die Anzahl der Vorkommnisse des Wortes innerhalb der beiden verglichenen Texte insgesamt geringer als 2 ist.
                 if re.match(r"...", word) and abs(mssWordCountDict[currMsLabel].get(word, 0) - mssWordCountDict[otherMsLabel].get(word, 0)) > 0 and mssWordCountDict[currMsLabel].get(word, 0) + mssWordCountDict[otherMsLabel].get(word, 0) < 2:
                     globalLeit[word] = globalLeit.get(word, 0) + 1
+                    
+if verbose_vote == 1:
+    with open("leitfehler_vote.txt", "w") as log2_file:
+        for word in globalLeit.keys():
+            if globalLeit[word] > cut:
+                log2_file.write(f"{word} ({globalLeit[word]}) : ")
+                for msIndex in range(1, len(msLabelArray)):
+                    currMsLabel = msLabelArray[msIndex]
+                    if word in mssWordCountDict[currMsLabel]:
+                        currMsLabel_first_4 = currMsLabel[:4]
+                        log2_file.write(f"{currMsLabel_first_4.strip()}:{mssWordCountDict[currMsLabel][word]} ")
+                log2_file.write("\n")
+          
     
 
 
@@ -217,32 +224,24 @@ for word in globalLeit.keys():
                         tab[3] += 1
 
                 if tab[0] == 0 and tab[1] > 0 and tab[2] > 0 and tab[3] > 0:
-                    if debug:
-                        vierer(tab[1], tab[2], tab[3], tab, word, otherWord)
                     r = rating(tab[1], tab[2], tab[3], word, otherWord)
                     s = ratings(tab[1], tab[2], tab[3], word, otherWord)
                     if r > 1:
                         ur[word] = ur[word] + (r - 1) ** 2 * s
                         ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
                 elif tab[1] == 0 and tab[0] > 0 and tab[2] > 0 and tab[3] > 0:
-                    if debug:
-                        vierer(tab[0], tab[2], tab[3], tab, word, otherWord)
                     r = rating(tab[0], tab[2], tab[3], word, otherWord)
                     s = ratings(tab[0], tab[2], tab[3], word, otherWord)
                     if r > 1:
                         ur[word] = ur[word] + (r - 1) ** 2 * s
                         ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
                 elif tab[2] == 0 and tab[0] > 0 and tab[1] > 0 and tab[3] > 0:
-                    if debug:
-                        vierer(tab[0], tab[1], tab[3], tab, word, otherWord)
                     r = rating(tab[0], tab[1], tab[3], word, otherWord)
                     s = ratings(tab[0], tab[1], tab[3], word, otherWord)
                     if r > 1:
                         ur[word] = ur[word] + (r - 1) ** 2 * s
                         ur[otherWord] = ur[otherWord] + (r - 1) ** 2 * s
                 elif tab[3] == 0 and tab[0] > 0 and tab[1] > 0 and tab[2] > 0:
-                    if debug:
-                        vierer(tab[0], tab[1], tab[2], tab, word, otherWord)
                     r = rating(tab[0], tab[1], tab[2], word, otherWord)
                     s = ratings(tab[0], tab[1], tab[2], word, otherWord)
                     if r > 1:

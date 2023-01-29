@@ -1,6 +1,5 @@
 Sammlung an Input für weitere Fragen, grundlegende Interpretation und Muster des Scrips und dessen Komponenten
 
-Aber auch für uns noch zu klärende Fragen über die Funktionsweise.
 
 ######################################################################################################################################################
 ######################################################################################################################################################
@@ -27,14 +26,15 @@ Aufbau:
     X Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
     X Kontrolle der Label zu distance matrix Abstände
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
-    - test suite
+    - cut parameter range (leitfehlerprint)
+    X test suite
   - Nice to have
     X Fehler bei Input im non-coco Format (böse באַבאַלז!)
     X preprocessing verbesser - eg. punkte hinzunehmen
     X bessere coding practice - nicht alles in einer Funktion
     X Normalisieren der Libraries für StdInput
-    - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
-    - Dokumentation + clean up, Kommentare
+    X Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
+    X Dokumentation + clean up, Kommentare
     X Vierer testen, raushauen?
 
 -) Blick auf die Package Methoden, Variablen und Parameter

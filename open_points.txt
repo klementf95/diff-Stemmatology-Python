@@ -27,6 +27,7 @@ Aufbau:
     X Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
     X Kontrolle der Label zu distance matrix Abstände
     - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
+    - test suite
   - Nice to have
     X Fehler bei Input im non-coco Format (böse באַבאַלז!)
     X preprocessing verbesser - eg. punkte hinzunehmen

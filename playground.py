@@ -8,31 +8,31 @@ import csv
 
   
 # defining parameters (user input)
-parser = argparse.ArgumentParser(
-    prog = 'Leitfehler Detection',
-    description= 'A Python Script for detecting Leitfehlers from a given text collation. The leitfehlers are pasted into a separate text document named "leitfehler_list.txt". Additionally it produces a lower-triangular distance matrix which can then be further used as input for PHYLIP and its various functionalities.\nThe script starts by reading in the input, which consists of tabular data (in either .csv or .txt format) with its columns  containing labels for the manuscripts followed by a line for every word in each manuscript. The script standardises the input by removing punctuation, it also stores the labels and contents of the manuscripts. Optionally the user can provide the script also with a file of regex or other substitution terms which are then parsed through the preprocessing pipeline as an additional step.\nThe function called dodiff takes two arrays of words in an input and returns the numeric difference between the two arrays. For this it compares the contents of each manuscript to the contents of every other manuscript that precedes it in the array.\nThe actual leitfehler calculation is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.\nThe script calculates a score for each word in the manuscripts based on the number of manuscripts in which it appears and its global frequency in the manuscripts.',
-    epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
+# parser = argparse.ArgumentParser(
+#     prog = 'Leitfehler Detection',
+#     description= 'A Python Script for detecting Leitfehlers from a given text collation. The leitfehlers are pasted into a separate text document named "leitfehler_list.txt". Additionally it produces a lower-triangular distance matrix which can then be further used as input for PHYLIP and its various functionalities.\nThe script starts by reading in the input, which consists of tabular data (in either .csv or .txt format) with its columns  containing labels for the manuscripts followed by a line for every word in each manuscript. The script standardises the input by removing punctuation, it also stores the labels and contents of the manuscripts. Optionally the user can provide the script also with a file of regex or other substitution terms which are then parsed through the preprocessing pipeline as an additional step.\nThe function called dodiff takes two arrays of words in an input and returns the numeric difference between the two arrays. For this it compares the contents of each manuscript to the contents of every other manuscript that precedes it in the array.\nThe actual leitfehler calculation is done by counting the number of times each word appears in each manuscript and comparing these counts between pairs of manuscripts.\nThe script calculates a score for each word in the manuscripts based on the number of manuscripts in which it appears and its global frequency in the manuscripts.',
+#     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
 
-parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score(effective range between 400 and 600)')
-parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
-parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
-parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
-parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts, expects the format: every substitution expression consisting of two lines where\nfirst line = matching pattern\nsecond line = substitution pattern')
-parser.add_argument('-w', '--weight', dest='weight', type=float, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
-parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: weighing for probability of leitfehler detection')
-parser.add_argument('-v', '--verbose_vote', dest='verbose_vote', action='store', type=int, default=0, choices=[0,1], help='Optional: Binary indicator 0 : only normal leitfehler list 1 : and a leitfehler list with relevance for each stemma')
+# parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
+# parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score(effective range between 400 and 600)')
+# parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
+# parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: comma)')
+# parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')
+# parser.add_argument('-r', '--regex', dest='regex', type=str, default = 0, help='Optional: Filepath to a textfile for additional regex patterns to be substituted within the texts, expects the format: every substitution expression consisting of two lines where\nfirst line = matching pattern\nsecond line = substitution pattern')
+# parser.add_argument('-w', '--weight', dest='weight', type=float, default = 20, help='Optional: weight. lf are counted .-times more for the best of them, the others proportionally down to 1')
+# parser.add_argument('-sm', '--scoremax', dest='scoremax', type=int, default = 1, help='Optional: weighing for probability of leitfehler detection')
+# parser.add_argument('-v', '--verbose_vote', dest='verbose_vote', action='store', type=int, default=0, choices=[0,1], help='Optional: Binary indicator 0 : only normal leitfehler list 1 : and a leitfehler list with relevance for each stemma')
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
-cut = args.cut
-debug = args.debug
-delimiter = args.delimiter
-encoding = args.encoding
-regex = args.regex
-weight = args.weight
-scoremax = args.scoremax
-verbose_vote = args.verbose_vote
+# cut = args.cut
+# debug = args.debug
+# delimiter = args.delimiter
+# encoding = args.encoding
+# regex = args.regex
+# weight = args.weight
+# scoremax = args.scoremax
+# verbose_vote = args.verbose_vote
 
 mssDict = defaultdict(str)
 msLabelArray = []
@@ -45,6 +45,15 @@ globalLeit = defaultdict(int)
 ur = defaultdict(int)
 mssDictList = defaultdict(list)
 mssListTemp = []
+
+cut = 0
+debug = 1
+delimiter = '\t'
+encoding = 'ISO-8859-15'
+regex = 0
+weight = 20
+scoremax = 1
+verbose_vote = 0
 
 
 
@@ -60,21 +69,16 @@ def ratings(a1, a2, a3, word, otherWord):
 
     return s
 
-if delimiter == 't':
-    delimiter = '\t'
 
-with open(args.file,'r', newline='', encoding=encoding) as f:
-    if delimiter == '\t':
-        reader = csv.DictReader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
-        print('test')
-    else:
-        reader = csv.DictReader(f, delimiter=delimiter)
+with open('./test_data/parzival_aligned.csv','r', newline='', encoding=encoding) as f:
+    reader = csv.DictReader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
     for label in reader.fieldnames:
         f.seek(0)
         for inst in reader:
             mssListTemp.append(inst[label])
         mssDictList[label.ljust(9)] = mssListTemp.copy()
         mssListTemp.clear()
+print(mssDictList)
 
 def diff(list_text1, list_text2):
     temp_diff = []
@@ -104,7 +108,7 @@ def dodiff(a1, a2):
 
 
 msLabelArray = list(mssDictList.keys())
-numOfMss = len(msLabelArray)
+numOfMss = print(len(msLabelArray))
             
     
 for key in mssDictList:

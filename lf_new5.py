@@ -5,6 +5,10 @@ from collections import defaultdict
 import argparse
 from argparse import RawTextHelpFormatter
 import csv
+import time
+
+tic = time.perf_counter()
+
 
   
 # defining parameters (user input)
@@ -66,7 +70,6 @@ if delimiter == 't':
 with open(args.file,'r', newline='', encoding=encoding) as f:
     if delimiter == '\t':
         reader = csv.DictReader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
-        print('test')
     else:
         reader = csv.DictReader(f, delimiter=delimiter)
     for label in reader.fieldnames:
@@ -309,3 +312,5 @@ if debug == 1:
 # print ins log file pro zeile:
 # score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.
 
+toc = time.perf_counter()
+print(f"Executed the Python Script in {toc - tic:0.4f} seconds")

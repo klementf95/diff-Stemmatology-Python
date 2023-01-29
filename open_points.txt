@@ -25,8 +25,8 @@ Aufbau:
     X seperator + encoding flags, die als start input mitgeliefert werden
     X Preprocessing Params für regex und dict (optional) (womöglich in einem eigenen file abzulegen, aus dem eingelesen wird)
     X Kontrolle der Label zu distance matrix Abstände
-    - weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
-    - cut parameter range (leitfehlerprint)
+    X weights: blackbox parameter soll range reverse engineeren (anhand der Beispiele im ursprungspaper)
+    X cut parameter range (leitfehlerprint)
     X test suite
   - Nice to have
     X Fehler bei Input im non-coco Format (böse באַבאַלז!)

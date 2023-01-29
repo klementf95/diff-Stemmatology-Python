@@ -4,6 +4,9 @@ use strict;
 use lib "./Algorithm-Diff-1.201/lib";
 use Algorithm::Diff qw(diff sdiff LCS traverse_sequences traverse_balanced);
 use List::Util qw( min max );
+use Time::HiRes;
+
+my $start_time = Time::HiRes::gettimeofday();
 
 # authorship: Dieter Bachmann (script), Philipp Roelli; rewritten by Eva Sediki.
 
@@ -12,7 +15,7 @@ use List::Util qw( min max );
 # 1 : .. and a list of pot. leitfehler (lf) and their score
 # 2 : ..... and a list of pot. lf and the ms. the occur in
 # 3 : ....... and a list of matches of pot. lf
-my $debug=1;
+my $debug=2;
 
 
 my $cut=0; # threshold for globalLeit, currently not used
@@ -29,15 +32,14 @@ my @msLabelArray;
 # standardisation
 my $numOfMss=0;
 
-my $filename = './test_data/besoin-all.txt';
+# my $filename = './test_data/besoin-all.txt';
 
-open(FH, '<', $filename) or die $!;
+# open(FH, '<', $filename) or die $!;
 
 my $in;
 
-while (<FH>)
+while (my $in=<>)
 {      
-    $in = $_;    
     chop $in; # Chop off the last char/strip string
 
     $in=~s/[\,!\?"]//g; # remove punctuation
@@ -456,3 +458,5 @@ sub vierer
 #- summiere fuer jedes Wort den Minimalwert (hoch 2)
 #- setze den Maxwert dieser = $weight  
 
+my $stop_time = Time::HiRes::gettimeofday();
+printf("Executed the perl script in %.4f\n", $stop_time - $start_time);

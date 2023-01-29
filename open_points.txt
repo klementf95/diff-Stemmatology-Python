@@ -33,8 +33,8 @@ Aufbau:
     X preprocessing verbesser - eg. punkte hinzunehmen
     X bessere coding practice - nicht alles in einer Funktion
     X Normalisieren der Libraries für StdInput
-    X Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
-    X Dokumentation + clean up, Kommentare
+    - Aktivsetzung/Umsetzung der inaktiven Elemente, bessere Umsetzung von cut?
+    - Dokumentation + clean up, Kommentare
     X Vierer testen, raushauen?
 
 -) Blick auf die Package Methoden, Variablen und Parameter

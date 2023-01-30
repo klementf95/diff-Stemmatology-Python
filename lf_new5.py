@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(
     epilog='Authorship: The original Perl version lf_new4 was written by Dieter Bachmann Philipp, Roelli & Eva Sediki. The lf_new5 was rewritten, optimised and translated into Python by Florian Klement & David Siegl.', formatter_class=RawTextHelpFormatter)
 
 parser.add_argument('-f', '--file', dest='file', required=True, type=str, help='Required: Filepath for the text collation, expects tabular data format (.csv or .txt)')
-parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score, can cut down runtime considerably (noticeable effect starts at roughly 400)')
+parser.add_argument('-c', '--cut', dest='cut', action='store', type=int, default=0, help='Optional: cut off threshold for leitfehler detection score, can cut down runtime considerably (noticeable effect starts at roughly 400, recommended to reduce runtime on large datasets)')
 parser.add_argument('-d', '--debug', dest='debug', action='store', type=int, default=1, choices=[0,1], help='Optional: Binary indicator 0 : only matrix 1 : and a list of pot. leitfehler (lf) and their score')
 parser.add_argument('-delim', '--delimiter', dest='delimiter', action='store', type=str, default=',', help='Optional: Delimiter of input file (default: ",")')
 parser.add_argument('-e', '--encoding', dest='encoding', action='store', type=str, default='utf-8', help='Optional: Encoding of input file (default: utf-8) See other available options for function open()')

@@ -76,3 +76,5 @@ PerlPhrasebook. (2012, 4 26). PerlPhrasebook - Python Wiki. Retrieved 12 8, 2022
 Roelli, P., & Bachmann, D. (2010). Towards Generating A Stemma Of Complicated Manuscript Traditions. Petrus Alfonsi's Dialogus. Revue d'histoire des textes, 5, 307-321.
 
 Trex-online, http://www.trex.uqam.ca/index.php?action=phylip. Accessed 5 February 2023.
+
+[![DOI](https://zenodo.org/badge/597797969.svg)](https://zenodo.org/badge/latestdoi/597797969)

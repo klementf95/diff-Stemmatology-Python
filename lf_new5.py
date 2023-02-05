@@ -7,7 +7,7 @@ from argparse import RawTextHelpFormatter
 import csv
 import time
 
-tic = time.perf_counter()
+#tic = time.perf_counter()
 
  
 # defining parameters (user input)
@@ -299,5 +299,5 @@ if debug == 1:
 # print ins log file pro zeile:
 # score (normiert) , ur wert (leitfehlerwert) und den score normiert durch scoremax als prozentsatz der wslkeit.
 
-toc = time.perf_counter()
-print(f"Executed the Python Script in {toc - tic:0.4f} seconds")
+#toc = time.perf_counter()
+#print(f"Executed the Python Script in {toc - tic:0.4f} seconds")

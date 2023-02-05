@@ -5,7 +5,7 @@ from collections import defaultdict
 import argparse
 from argparse import RawTextHelpFormatter
 import csv
-import time
+#import time
 
 #tic = time.perf_counter()
 
